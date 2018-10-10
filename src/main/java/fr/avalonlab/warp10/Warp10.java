@@ -23,17 +23,17 @@ public class Warp10 {
     this.readToken = readToken;
   }
 
-  public Warp10(String endPointuri) {
-    this.endPointUri = endPointuri;
+  public Warp10(String endPointUri) {
+    this.endPointUri = endPointUri;
   }
 
   public Warp10 withWriteToken(String token) {
-    this.writeToken = writeToken;
+    writeToken = token;
     return this;
   }
 
   public Warp10 withReadToken(String token) {
-    this.readToken = readToken;
+    readToken = token;
     return this;
   }
 
@@ -58,7 +58,7 @@ public class Warp10 {
     return this;
   }
 
-  public Warp10 delette(String query) {
+  public Warp10 delete(String query) {
     request = HttpRequest.newBuilder()
       .uri(URI.create(endPointUri + "/delete?" + query))
       .header("X-Warp10-Token", writeToken)

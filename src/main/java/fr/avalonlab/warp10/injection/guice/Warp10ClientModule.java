@@ -1,4 +1,4 @@
-package fr.avalonlab.warp10.injection.guide;
+package fr.avalonlab.warp10.injection.guice;
 
 import com.google.inject.AbstractModule;
 
