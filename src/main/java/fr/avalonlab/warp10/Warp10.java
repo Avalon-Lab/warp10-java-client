@@ -27,6 +27,10 @@ public class Warp10 {
     this.endPointUri = endPointUri;
   }
 
+  public static Warp10 instance(String endpointURL) {
+    return new Warp10(endpointURL);
+  }
+
   public Warp10 withWriteToken(String token) {
     writeToken = token;
     return this;
