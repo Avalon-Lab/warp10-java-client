@@ -13,25 +13,28 @@ public class GTSOutput {
     private Map<String, String> labels;
     private Map<String, String> attributes;
     private String id;
-    private String value;
     private List<DataPoint> points;
 
-    public static GTSOutput fromOutputFormat(String output) {
-        final String regex = "\\{(\"c\"):(?<c>.*),(\"l\"):(?<l>\\{.*\\}),(\"a\"):(?<a>\\{.*\\}),((\"i\"):(?<i>\".*\"),)?(\"v\"):(?<v>\\[\\[.*]])\\}";
+    public static List<GTSOutput> fromOutputFormat(String output) {
+        final String regex = "\\{(\"c\"):(?<c>.*?),(\"l\"):(?<l>\\{.*?\\}),(\"a\"):(?<a>\\{.*?\\}),((\"i\"):(?<i>\".*?\"),)?(\"v\"):(?<v>\\[\\[.*?]])\\}";
 
         Matcher matcher = Pattern.compile(regex, Pattern.MULTILINE).matcher(output);
 
-        GTSOutput gts = new GTSOutput();
+        List<GTSOutput> outputs = new ArrayList<>();
 
-        if (matcher.find()) {
+        while (matcher.find()) {
+            GTSOutput gts = new GTSOutput();
+
             gts.className = stripExtraQuotes(matcher.group("c"));
             gts.labels = populateMap(matcher.group("l"));
             gts.attributes = populateMap(matcher.group("a"));
             gts.id = stripExtraQuotes(matcher.group("i"));
             gts.points = extractDataPoint(matcher.group("v"));
+
+            outputs.add(gts);
         }
 
-        return gts;
+        return outputs;
     }
 
     private static String stripExtraQuotes(String string) {
@@ -42,6 +45,7 @@ public class GTSOutput {
     }
 
     private static List<DataPoint> extractDataPoint(String source) {
+
         String[] values = source.replaceAll("\\[\\[", "[").replaceAll("]]", "]").split("],");
 
         List<DataPoint> allPoints = new ArrayList<>();

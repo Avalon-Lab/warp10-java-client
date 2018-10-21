@@ -5,8 +5,10 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
+import fr.avalonlab.warp10.DSL.GTSOutput;
 import fr.avalonlab.warp10.DSL.Warpscript;
 import fr.avalonlab.warp10.DSL.GTSInput;
 
@@ -82,16 +84,18 @@ public class Warp10 {
     return this;
   }
 
-  public HttpResponse<String> send() throws IOException, InterruptedException {
+  public List<GTSOutput> send() throws IOException, InterruptedException {
     HttpClient client = HttpClient.newHttpClient();
 
-    return client.send(request, HttpResponse.BodyHandlers.ofString());
+    HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+    return GTSOutput.fromOutputFormat(response.body());
   }
 
-  public CompletableFuture<HttpResponse<String>> sendAsync() {
+  public CompletableFuture<List<GTSOutput>> sendAsync() {
     HttpClient client = HttpClient.newHttpClient();
 
-    return client.sendAsync(request, HttpResponse.BodyHandlers.ofString());
+    return client.sendAsync(request, HttpResponse.BodyHandlers.ofString()).thenApply(response -> GTSOutput.fromOutputFormat(response.body()));
   }
 
 

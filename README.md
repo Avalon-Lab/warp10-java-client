@@ -45,12 +45,10 @@ asynchronously.
 
 Example : 
 ````jvm
-HttpResponse<String> response = Warp10.instance(endpointURL)
+List<GTSOutput> response = Warp10.instance(endpointURL)
     .withReadToken(readToken)
     .fetch(query)
-    .send();
-    
-String result = response.body();    
+    .send();   
 ````
 
 
