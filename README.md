@@ -50,7 +50,7 @@ HttpResponse<String> response = Warp10.instance(endpointURL)
     .fetch(query)
     .send();
     
-List<String> result = (List<String>) new ObjectMapper().readValue(response.body(), List.class);    
+String result = response.body();    
 ````
 
 
