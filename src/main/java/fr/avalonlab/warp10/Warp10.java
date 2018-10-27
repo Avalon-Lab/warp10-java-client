@@ -5,6 +5,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
@@ -14,19 +15,24 @@ import fr.avalonlab.warp10.DSL.GTSInput;
 
 public class Warp10 {
 
+  private final HttpClient DEFAULT_HTTP_CLIENT = HttpClient.newHttpClient();
   private final String endPointUri;
   private String readToken;
   private String writeToken;
   private HttpRequest request;
+  private HttpClient client;
+
 
   public Warp10(String endPointUri, String writeToken, String readToken) {
     this.endPointUri = endPointUri;
     this.writeToken = writeToken;
     this.readToken = readToken;
+    this.client = DEFAULT_HTTP_CLIENT;
   }
 
   public Warp10(String endPointUri) {
     this.endPointUri = endPointUri;
+    this.client = DEFAULT_HTTP_CLIENT;
   }
 
   public static Warp10 instance(String endpointURL) {
@@ -41,6 +47,11 @@ public class Warp10 {
   public Warp10 withReadToken(String token) {
     readToken = token;
     return this;
+  }
+
+  public Warp10 withClient(HttpClient client) {
+      this.client = client;
+      return this;
   }
 
   public Warp10 ingress(GTSInput data) {
@@ -76,7 +87,7 @@ public class Warp10 {
 
   public Warp10 exec(Warpscript warpscript) {
     request = HttpRequest.newBuilder()
-      .uri(URI.create(endPointUri + "/update"))
+      .uri(URI.create(endPointUri + "/exec"))
       .header("Content-Type", "text/plain")
       .POST(HttpRequest.BodyPublishers.ofString(warpscript.TOKEN(readToken).formatScript()))
       .build();
@@ -85,17 +96,18 @@ public class Warp10 {
   }
 
   public List<GTSOutput> send() throws IOException, InterruptedException {
-    HttpClient client = HttpClient.newHttpClient();
 
     HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-    return GTSOutput.fromOutputFormat(response.body());
+    if(response != null) {
+        return GTSOutput.fromOutputFormat(response.body());
+    }
+
+    return new ArrayList<>();
   }
 
   public CompletableFuture<List<GTSOutput>> sendAsync() {
-    HttpClient client = HttpClient.newHttpClient();
-
-    return client.sendAsync(request, HttpResponse.BodyHandlers.ofString()).thenApply(response -> GTSOutput.fromOutputFormat(response.body()));
+        return client.sendAsync(request, HttpResponse.BodyHandlers.ofString()).thenApply(response -> GTSOutput.fromOutputFormat(response.body()));
   }
 
 

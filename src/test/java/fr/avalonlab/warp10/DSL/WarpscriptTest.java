@@ -15,6 +15,27 @@ import static org.assertj.core.api.Assertions.*;
 class WarpscriptTest {
 
   @Test
+  public void warpscriptFromRawQuery() {
+    String rawQuery = "'34RT-REE2-RERER' 'MY_TOKEN' STORE\n"
+            + "my warpscipt command";
+
+    String script = Warpscript.builder().rawQuery(rawQuery).formatScript();
+
+    assertThat(script).isEqualTo(rawQuery);
+  }
+
+  @Test
+  public void warpscriptFromRawQueryWithToken() {
+    String rawQuery = "my super\n"
+            + "warpscript\n"
+            + "command";
+
+    String script = Warpscript.builder().TOKEN("44TT-55Yy-KJ98").rawQuery(rawQuery).formatScript();
+
+    assertThat(script).isEqualTo(expectedWarpScriptWithToken());
+  }
+
+  @Test
   public void completeWarpScript() {
     Fetch fetch = Fetch.builder().CLASS("~fr.avalonlab.Test.*").START(ZonedDateTime.parse("2018-04-20T00:00:00Z")).END(ZonedDateTime.parse("2018-08-28T00:00:00Z"));
     Bucketize bucketize = Bucketize.builder().GTS(SWAP).BUCKETIZER("bucketizer.sum").LASTBUCKET(NOW).BUCKETCOUNT(1);
@@ -28,6 +49,14 @@ class WarpscriptTest {
 
     assertThat(script).isEqualTo(expectedWarpScript());
   }
+
+  private String expectedWarpScriptWithToken() {
+    return "'44TT-55Yy-KJ98' 'TOKEN' STORE\n" +
+            "my super\n" +
+            "warpscript\n" +
+            "command";
+  }
+
 
   private String expectedWarpScript() {
     return "'READ_TOKEN' 'TOKEN' STORE\n" +

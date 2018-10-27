@@ -1,5 +1,6 @@
 package fr.avalonlab.warp10.DSL;
 
+import fr.avalonlab.warp10.exception.MissingMandatoryDataException;
 import org.junit.jupiter.api.Test;
 
 import java.time.ZonedDateTime;
@@ -7,6 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class GTSInputTest {
 
@@ -74,4 +76,27 @@ class GTSInputTest {
     assertThat(result).isEqualTo("1527285600000000/45.0:-0.01/10000000 foobar{label0=val0,label1=val1} 'Toto'");
   }
 
+  @Test
+  public void labelsAreMandatory() {
+    Throwable exception = assertThrows(MissingMandatoryDataException.class, () -> GTSInput.builder().NAME("toto").toInputFormat());
+
+    assertThat(exception).isInstanceOf(MissingMandatoryDataException.class);
+    assertThat(exception.getMessage()).isEqualTo("The data 'LABELS' was not set.");
+  }
+
+  @Test
+  public void nameIsMandatory() {
+    Throwable exception = assertThrows(MissingMandatoryDataException.class, () -> GTSInput.builder().toInputFormat());
+
+    assertThat(exception).isInstanceOf(MissingMandatoryDataException.class);
+    assertThat(exception.getMessage()).isEqualTo("The data 'NAME' was not set.");
+  }
+
+  @Test
+  public void valueIsMandatory() {
+    Throwable exception = assertThrows(MissingMandatoryDataException.class, () -> GTSInput.builder().NAME("toto").LABEL("plip", "plop").toInputFormat());
+
+    assertThat(exception).isInstanceOf(MissingMandatoryDataException.class);
+    assertThat(exception.getMessage()).isEqualTo("The data 'VALUE' was not set.");
+  }
 }

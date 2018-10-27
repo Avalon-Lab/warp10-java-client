@@ -1,11 +1,12 @@
 package fr.avalonlab.warp10.DSL;
 
+import fr.avalonlab.warp10.exception.MissingMandatoryDataException;
+
 import java.net.URLEncoder;
 import java.nio.charset.Charset;
 import java.time.ZonedDateTime;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.MissingFormatArgumentException;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
@@ -93,12 +94,12 @@ public class GTSInput {
 
     String warp10Format = "%s/%s/%s %s{%s} %s";
 
-    return String.format(warp10Format, formatOptionalLongValue(ts), formatOptionalLatLon(), formatOptionalLongValue(elev), formatMandatoryFieldNAme(), formatLabels(), formatValue());
+    return String.format(warp10Format, formatOptionalLongValue(ts), formatOptionalLatLon(), formatOptionalLongValue(elev), formatMandatoryFieldName(), formatLabels(), formatValue());
   }
 
-  private String formatMandatoryFieldNAme() {
+  private String formatMandatoryFieldName() {
     if(name == null) {
-      throw new MissingFormatArgumentException("NAME");
+      throw new MissingMandatoryDataException("NAME");
     }
 
     return name;
@@ -116,7 +117,7 @@ public class GTSInput {
     if (labels != null && !labels.isEmpty()) {
       return labels.entrySet().stream().map(entry -> entry.getKey() + '=' + entry.getValue()).collect(Collectors.joining(","));
     }
-    throw new MissingFormatArgumentException("LABELS");
+    throw new MissingMandatoryDataException("LABELS");
   }
 
   private String formatOptionalLongValue(Long possibleNullValue) {
@@ -136,7 +137,7 @@ public class GTSInput {
     } else if (stringValue != null) {
       return "'" + URLEncoder.encode(stringValue, Charset.forName("utf-8")) + "'";
     }
-    throw new MissingFormatArgumentException("VALUE");
+    throw new MissingMandatoryDataException("VALUE");
   }
 
 }

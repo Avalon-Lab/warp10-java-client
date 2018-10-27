@@ -9,18 +9,14 @@ public class Warpscript {
 
   public static final String SWAP = "SWAP";
   public static final String NOW = "NOW";
-
   private static final String NEW_LINE = "\n";
 
   private String rawQuery;
   private String token;
   private Framework[] functions;
 
-  private Warpscript() {
-  }
 
-  private Warpscript(String rawQuery) {
-    this.rawQuery = rawQuery;
+  private Warpscript() {
   }
 
   public static Warpscript builder() {
@@ -37,6 +33,7 @@ public class Warpscript {
     return this;
   }
 
+
   public Warpscript functions(Framework... functions) {
     this.functions = functions;
     return this;
@@ -44,11 +41,14 @@ public class Warpscript {
 
 
   public String formatScript() {
-    if (rawQuery != null) {
-      return rawQuery;
-    }
 
     String script =  "'" + token + "' " + "'TOKEN' STORE" + NEW_LINE;
+
+    if (rawQuery != null && token == null) {
+      return rawQuery;
+    } else if (rawQuery != null) {
+      return script + rawQuery;
+    }
 
     if(functions.length > 0) {
       script += Stream.of(functions).map(Framework::formatScript).collect(Collectors.joining(NEW_LINE));
