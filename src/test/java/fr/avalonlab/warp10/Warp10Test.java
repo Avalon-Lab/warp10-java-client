@@ -2,6 +2,7 @@ package fr.avalonlab.warp10;
 
 import fr.avalonlab.warp10.DSL.GTSInput;
 import fr.avalonlab.warp10.DSL.Warpscript;
+import fr.avalonlab.warp10.exception.MissingMandatoryDataException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -53,6 +54,16 @@ class Warp10Test {
     }
 
     @Test
+    void checkFetchMandatoryReadToken() {
+        Throwable exception = assertThrows(MissingMandatoryDataException.class, () -> Warp10.instance(ENDPOINT_URL)
+                .withClient(testClient)
+                .fetch("world"));
+
+        assertThat(exception).isInstanceOf(MissingMandatoryDataException.class);
+        assertThat(exception.getMessage()).isEqualTo("The data 'READ_TOKEN' was not set.");
+    }
+
+    @Test
     void fetchWithBadURI() {
         Throwable exception = assertThrows(IllegalArgumentException.class, () -> Warp10.instance("hello://world")
                 .withClient(testClient)
@@ -78,6 +89,16 @@ class Warp10Test {
     }
 
     @Test
+    void checkIngressMandatoryWriteToken() {
+        Throwable exception = assertThrows(MissingMandatoryDataException.class, () -> Warp10.instance(ENDPOINT_URL)
+                .withClient(testClient)
+                .ingress(input));
+
+        assertThat(exception).isInstanceOf(MissingMandatoryDataException.class);
+        assertThat(exception.getMessage()).isEqualTo("The data 'WRITE_TOKEN' was not set.");
+    }
+
+    @Test
     void delete() throws IOException, InterruptedException {
         Warp10 warp10 = Warp10.instance(ENDPOINT_URL)
                 .withClient(testClient)
@@ -89,6 +110,16 @@ class Warp10Test {
         assertThat(testClient.calculatedRequest.uri()).isEqualTo(URI.create("http://hello/delete?selector=~t.t.%7Bb=4%7D&start=2015-09-02T12:00:00Z"));
         assertThat(testClient.calculatedRequest.method()).isEqualTo("GET");
         assertThat(testClient.calculatedRequest.headers().firstValue("X-Warp10-Token")).contains("ER5446");
+    }
+
+    @Test
+    void checkDeleteMandatoryWriteToken() {
+        Throwable exception = assertThrows(MissingMandatoryDataException.class, () -> Warp10.instance(ENDPOINT_URL)
+                .withClient(testClient)
+                .delete("selector=~t.t.%7Bb=4%7D&start=2015-09-02T12:00:00Z"));
+
+        assertThat(exception).isInstanceOf(MissingMandatoryDataException.class);
+        assertThat(exception.getMessage()).isEqualTo("The data 'WRITE_TOKEN' was not set.");
     }
 
     @Test
@@ -104,6 +135,16 @@ class Warp10Test {
         assertThat(testClient.calculatedRequest.method()).isEqualTo("POST");
         assertThat(testClient.calculatedRequest.headers().firstValue("X-Warp10-Token")).isEmpty();
         assertThat(testClient.calculatedRequest.headers().firstValue("Content-Type")).contains("text/plain");
+    }
+
+    @Test
+    void checkExecMandatoryReadToken() {
+        Throwable exception = assertThrows(MissingMandatoryDataException.class, () -> Warp10.instance(ENDPOINT_URL)
+                .withClient(testClient)
+                .exec(Warpscript.builder().rawQuery("toto")));
+
+        assertThat(exception).isInstanceOf(MissingMandatoryDataException.class);
+        assertThat(exception.getMessage()).isEqualTo("The data 'READ_TOKEN' was not set.");
     }
 
     private class HttpTestClient extends HttpClient {
