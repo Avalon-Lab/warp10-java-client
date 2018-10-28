@@ -2,69 +2,61 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
-  <modelVersion>4.0.0</modelVersion>
+    <modelVersion>4.0.0</modelVersion>
 
-  <artifactId>warp10-java-client</artifactId>
-  <groupId>fr.avalonlab.warp10</groupId>
-  <version>1.0-SNAPSHOT</version>
+    <artifactId>warp10-java-client</artifactId>
+    <groupId>fr.avalonlab.warp10</groupId>
+    <version>1.0-SNAPSHOT</version>
 
-  <name>warp10-java-client</name>
-  <description>Warp10 java client and DSL.</description>
+    <name>warp10-java-client</name>
+    <description>Warp10 java client and DSL.</description>
 
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-    <java.source.version>11</java.source.version>
-    <maven.compiler.target>11</maven.compiler.target>
-    <maven.compiler.source>11</maven.compiler.source>
+        <java.source.version>11</java.source.version>
+        <maven.compiler.target>11</maven.compiler.target>
+        <maven.compiler.source>11</maven.compiler.source>
 
-    <junit.jupiter.version>5.2.0</junit.jupiter.version>
-    <assertj.core.version>3.10.0</assertj.core.version>
-  </properties>
+        <junit.jupiter.version>5.2.0</junit.jupiter.version>
+        <assertj.core.version>3.10.0</assertj.core.version>
+    </properties>
 
-  <dependencies>
-      <!-- Javax Modules -->
-    <dependency>
-        <groupId>javax.inject</groupId>
-        <artifactId>javax.inject</artifactId>
-        <version>1</version>
-    </dependency>
+    <dependencies>
+        <!-- Javax Modules -->
+        <dependency>
+            <groupId>javax.inject</groupId>
+            <artifactId>javax.inject</artifactId>
+            <version>1</version>
+        </dependency>
 
-    <!-- Guice provided Module for Guice DI-->
-    <dependency>
-        <groupId>com.google.inject</groupId>
-        <artifactId>guice</artifactId>
-        <version>4.2.1</version>
-        <scope>provided</scope>
-    </dependency>
+        <!-- Tests -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>${junit.jupiter.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-params</artifactId>
+            <version>${junit.jupiter.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>${junit.jupiter.version}</version>
+            <scope>test</scope>
+        </dependency>
 
-    <!-- Tests -->
-    <dependency>
-      <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter-api</artifactId>
-      <version>${junit.jupiter.version}</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter-params</artifactId>
-      <version>${junit.jupiter.version}</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter-engine</artifactId>
-      <version>${junit.jupiter.version}</version>
-      <scope>test</scope>
-    </dependency>
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>${assertj.core.version}</version>
+            <scope>test</scope>
+        </dependency>
 
-    <dependency>
-      <groupId>org.assertj</groupId>
-      <artifactId>assertj-core</artifactId>
-      <version>${assertj.core.version}</version>
-      <scope>test</scope>
-    </dependency>
-
-  </dependencies>
+    </dependencies>
 
 </project>

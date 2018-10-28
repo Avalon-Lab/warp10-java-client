@@ -1,7 +1,8 @@
 package fr.avalonlab.warp10.DSL;
 
-import static org.assertj.core.api.Assertions.*;
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 
 class DataPointTest {

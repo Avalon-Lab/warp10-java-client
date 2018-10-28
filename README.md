@@ -28,8 +28,6 @@ To ease its usage, if you use a dependency injection framework we provide an inj
 - warp10.token.write
 - warp10.token.read
 
-If you use Guice, we also provide a Guice module that you cas use : `Warp10ClientModule.java`
-
 This client is designed as a builder, it exposes two methods to set the tokens `withWriteToken` and `withReadToken`.  
 It also exposes the complete [warp10 APIs](http://www.warp10.io/apis/) : 
 - fetch

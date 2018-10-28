@@ -19,7 +19,7 @@ import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class Warp10Test {
@@ -56,6 +56,7 @@ class Warp10Test {
     public void fetchWithBadURI() {
         Throwable exception = assertThrows(IllegalArgumentException.class, () -> Warp10.instance("hello://world")
                 .withClient(testClient)
+                .withReadToken("blabla")
                 .fetch("warp10"));
 
         assertThat(exception.getMessage()).isEqualTo("invalid URI scheme hello");

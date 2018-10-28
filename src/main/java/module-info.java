@@ -2,8 +2,7 @@ module avalon.lab.warp10client {
 
     requires java.base;
     requires java.net.http;
-
-    requires com.google.guice;
+    requires javax.inject;
 
     exports fr.avalonlab.warp10;
 
@@ -13,5 +12,4 @@ module avalon.lab.warp10client {
     exports fr.avalonlab.warp10.DSL.framework;
 
     exports fr.avalonlab.warp10.injection;
-    exports fr.avalonlab.warp10.injection.guice;
 }
