@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 class GTSInputTest {
 
     @Test
-    public void withoutLatLonElev() {
+    void withoutLatLonElev() {
         GTSInput newGTSInput = GTSInput.builder()
                 .TS(1380475081000000L)
                 .NAME("foo")
@@ -26,7 +26,7 @@ class GTSInputTest {
     }
 
     @Test
-    public void withoutTsAndElev() {
+    void withoutTsAndElev() {
         Map<String, String> mapOfLabels = new HashMap<>();
         mapOfLabels.put("label2", "val2");
 
@@ -43,7 +43,7 @@ class GTSInputTest {
     }
 
     @Test
-    public void fullDataGTS() {
+    void fullDataGTS() {
         GTSInput newGTSInput = GTSInput.builder()
                 .TS(1380475081123456L)
                 .LAT(45.0)
@@ -60,7 +60,7 @@ class GTSInputTest {
     }
 
     @Test
-    public void withZoneDateTimeTS() {
+    void withZoneDateTimeTS() {
         GTSInput newGTSInput = GTSInput.builder()
                 .TS(ZonedDateTime.parse("2018-05-26T00:00:00+02:00"))
                 .LAT(45.0)
@@ -77,7 +77,7 @@ class GTSInputTest {
     }
 
     @Test
-    public void labelsAreMandatory() {
+    void labelsAreMandatory() {
         Throwable exception = assertThrows(MissingMandatoryDataException.class, () -> GTSInput.builder().NAME("toto").toInputFormat());
 
         assertThat(exception).isInstanceOf(MissingMandatoryDataException.class);
@@ -85,7 +85,7 @@ class GTSInputTest {
     }
 
     @Test
-    public void nameIsMandatory() {
+    void nameIsMandatory() {
         Throwable exception = assertThrows(MissingMandatoryDataException.class, () -> GTSInput.builder().toInputFormat());
 
         assertThat(exception).isInstanceOf(MissingMandatoryDataException.class);
@@ -93,7 +93,7 @@ class GTSInputTest {
     }
 
     @Test
-    public void valueIsMandatory() {
+    void valueIsMandatory() {
         Throwable exception = assertThrows(MissingMandatoryDataException.class, () -> GTSInput.builder().NAME("toto").LABEL("plip", "plop").toInputFormat());
 
         assertThat(exception).isInstanceOf(MissingMandatoryDataException.class);

@@ -8,7 +8,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class DataPointTest {
 
     @Test
-    public void emptyDataPoint() {
+    void emptyDataPoint() {
         DataPoint dp = new DataPoint(null, null, null, null, null);
 
         assertThat(dp.isEmpty()).isTrue();
@@ -16,7 +16,7 @@ class DataPointTest {
     }
 
     @Test
-    public void timedDataPoint() {
+    void timedDataPoint() {
         DataPoint dp = DataPoint.of("toto", 12345670000L);
 
         assertThat(dp).isEqualTo(new DataPoint(12345670000L, null, null, null, "toto"));
@@ -25,7 +25,7 @@ class DataPointTest {
     }
 
     @Test
-    public void geoLocDataPoint() {
+    void geoLocDataPoint() {
         DataPoint dp = DataPoint.of("toto", 12345670000L)
                 .atLongitude(877633883000L)
                 .atLatitude(9874333000L);
@@ -36,7 +36,7 @@ class DataPointTest {
     }
 
     @Test
-    public void geoLocWithElevationDataPoint() {
+    void geoLocWithElevationDataPoint() {
         DataPoint dp = DataPoint.of("toto", 12345670000L)
                 .atLongitude(877633883000L)
                 .atLatitude(9874333000L)

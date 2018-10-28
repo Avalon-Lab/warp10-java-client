@@ -10,7 +10,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class GTSOutputTest {
 
     @Test
-    public void parseWarp10GtsSingleOutput() {
+    void parseWarp10GtsSingleOutput() {
         String singleOutput = "{\"c\":\"fr.avalonlab.dashboard.category.domain.Category\",\"l\":{\"label\":\"ju+in\",\"type\":\"DEBIT\",\"category\":\"15e99-0d2a\",\".app\":\"dashboard\"},\"a\":{},\"v\":[[1529964000000000,4000]]}";
 
         List<GTSOutput> gts = GTSOutput.fromOutputFormat(singleOutput);
@@ -25,7 +25,7 @@ class GTSOutputTest {
 
 
     @Test
-    public void parseWarp10GtsSingleOutputWithMultipleValue() {
+    void parseWarp10GtsSingleOutputWithMultipleValue() {
         String warp10Output = "{\"c\":\"fr.avalonlab.dashboard.category.domain.Category\",\"l\":{\"type\":\"CREDIT\",\"category\":\"b414301f-08b3\",\".app\":\"dashboard\"},\"a\":{},\"v\":[[1527152658209000,50.27],[1529744658209000,150.8],[1532336658209000,600]]}";
 
         List<GTSOutput> gts = GTSOutput.fromOutputFormat(warp10Output);
@@ -39,7 +39,7 @@ class GTSOutputTest {
     }
 
     @Test
-    public void parseWarp10GtsComplexOutput() {
+    void parseWarp10GtsComplexOutput() {
         String complexOutput = "[{\"c\":\"fr.avalonlab.dashboard.category.domain.Category\",\"l\":{\"type\":\"CREDIT\",\"category\":\"b414301f-08b3\",\".app\":\"dashboard\"},\"a\":{},\"v\":[[1527152658209000,50.27],[1529744658209000,150.8],[1532336658209000,600]]},{\"c\":\"fr.avalonlab.dashboard.category.domain.Category\",\"l\":{\"type\":\"DEBIT\",\"category\":\"15c92e99-0d2a\",\".app\":\"dashboard\"},\"a\":{},\"v\":[[1529744658209000,3000],[1532336658209000,4000.5],[1534928658209000,4700]]}]";
 
         List<GTSOutput> gts = GTSOutput.fromOutputFormat(complexOutput);

@@ -8,7 +8,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class ReduceTest {
 
     @Test
-    public void zeroLabel() {
+    void zeroLabel() {
         Reduce reduce = Reduce.builder()
                 .GTS(SWAP)
                 .reducer("reducer.sum");
@@ -23,7 +23,7 @@ class ReduceTest {
     }
 
     @Test
-    public void oneLabel() {
+    void oneLabel() {
         Reduce reduce = Reduce.builder()
                 .GTS(SWAP)
                 .labels("type")
@@ -39,7 +39,7 @@ class ReduceTest {
     }
 
     @Test
-    public void twoLabel() {
+    void twoLabel() {
         Reduce reduce = Reduce.builder()
                 .GTS(SWAP)
                 .labels("type", "time")

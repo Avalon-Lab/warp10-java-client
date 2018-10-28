@@ -9,7 +9,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class FetchTest {
 
     @Test
-    public void fetchWithTimeStamp() {
+    void fetchWithTimeStamp() {
         Fetch script = Fetch.builder()
                 .CLASS("~class.*")
                 .addLabel("foo", "bar")
@@ -28,7 +28,7 @@ class FetchTest {
     }
 
     @Test
-    public void fetchWithTimespan() {
+    void fetchWithTimespan() {
         Fetch script = Fetch.builder()
                 .CLASS("~class.*")
                 .addLabel("foo", "bar")

@@ -9,7 +9,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class BucketizeTest {
 
     @Test
-    public void swapBucketizer() {
+    void swapBucketizer() {
         Bucketize bucket = Bucketize.builder()
                 .GTS(SWAP)
                 .BUCKETIZER("bucketizer.sum")

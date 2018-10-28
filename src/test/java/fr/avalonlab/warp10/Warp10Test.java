@@ -24,12 +24,12 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class Warp10Test {
 
-    public static final String ENDPOINT_URL = "http://hello";
+    private static final String ENDPOINT_URL = "http://hello";
     private HttpTestClient testClient;
     private GTSInput input;
 
     @BeforeEach
-    public void init() {
+    void init() {
         testClient = new HttpTestClient();
         input = GTSInput.builder()
                 .TS(1380475081000000L)
@@ -39,7 +39,7 @@ class Warp10Test {
     }
 
     @Test
-    public void fetchQuery() throws IOException, InterruptedException {
+    void fetchQuery() throws IOException, InterruptedException {
         Warp10 warp10 = Warp10.instance(ENDPOINT_URL)
                 .withClient(testClient)
                 .withReadToken("1234567890")
@@ -53,7 +53,7 @@ class Warp10Test {
     }
 
     @Test
-    public void fetchWithBadURI() {
+    void fetchWithBadURI() {
         Throwable exception = assertThrows(IllegalArgumentException.class, () -> Warp10.instance("hello://world")
                 .withClient(testClient)
                 .withReadToken("blabla")
@@ -63,7 +63,7 @@ class Warp10Test {
     }
 
     @Test
-    public void ingress() throws IOException, InterruptedException {
+    void ingress() throws IOException, InterruptedException {
         Warp10 warp10 = Warp10.instance(ENDPOINT_URL)
                 .withClient(testClient)
                 .withWriteToken("908766")
@@ -78,7 +78,7 @@ class Warp10Test {
     }
 
     @Test
-    public void delete() throws IOException, InterruptedException {
+    void delete() throws IOException, InterruptedException {
         Warp10 warp10 = Warp10.instance(ENDPOINT_URL)
                 .withClient(testClient)
                 .withWriteToken("ER5446")
@@ -92,7 +92,7 @@ class Warp10Test {
     }
 
     @Test
-    public void exec() throws IOException, InterruptedException {
+    void exec() throws IOException, InterruptedException {
         Warp10 warp10 = Warp10.instance(ENDPOINT_URL)
                 .withClient(testClient)
                 .withReadToken("3442GFG")
