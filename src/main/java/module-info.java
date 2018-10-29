@@ -2,6 +2,7 @@ module avalon.lab.warp10client {
 
     requires java.base;
     requires java.net.http;
+    requires javax.inject;
 
     exports fr.avalonlab.warp10;
 
