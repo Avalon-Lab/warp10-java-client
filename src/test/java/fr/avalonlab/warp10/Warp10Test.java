@@ -16,6 +16,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.time.Duration;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
@@ -163,7 +164,17 @@ class Warp10Test {
         }
 
         @Override
+        public <T> CompletableFuture<HttpResponse<T>> sendAsync(HttpRequest request, HttpResponse.BodyHandler<T> responseBodyHandler, HttpResponse.PushPromiseHandler<T> pushPromiseHandler) {
+            return null;
+        }
+
+        @Override
         public Optional<CookieHandler> cookieHandler() {
+            return Optional.empty();
+        }
+
+        @Override
+        public Optional<Duration> connectTimeout() {
             return Optional.empty();
         }
 
@@ -202,10 +213,6 @@ class Warp10Test {
             return Optional.empty();
         }
 
-        @Override
-        public <T> CompletableFuture<HttpResponse<T>> sendAsync(HttpRequest request, HttpResponse.BodyHandler<T> responseBodyHandler, HttpResponse.PushPromiseHandler<T> pushPromiseHandler) {
-            return null;
-        }
     }
 }
 
