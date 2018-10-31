@@ -1,15 +1,17 @@
 package fr.avalonlab.warp10.dsl;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class DataPoint {
     private Long msTimestamp;
-    private Long latitude;
-    private Long longitude;
+    private Double latitude;
+    private Double longitude;
     private Long elevation;
     private String value;
 
-    public DataPoint(Long msTimestamp, Long latitude, Long longitude, Long elevation, String value) {
+    public DataPoint(Long msTimestamp, Double latitude, Double longitude, Long elevation, String value) {
         this.msTimestamp = msTimestamp;
         this.latitude = latitude;
         this.longitude = longitude;
@@ -38,12 +40,12 @@ public class DataPoint {
         return new DataPoint(msTimeStamp, value);
     }
 
-    public DataPoint atLatitude(Long lat) {
+    public DataPoint atLatitude(double lat) {
         latitude = lat;
         return this;
     }
 
-    public DataPoint atLongitude(Long lgt) {
+    public DataPoint atLongitude(double lgt) {
         longitude = lgt;
         return this;
     }
@@ -61,16 +63,61 @@ public class DataPoint {
         return msTimestamp;
     }
 
-    public Long getLatitude() {
+    public Double getLatitude() {
         return latitude;
     }
 
-    public Long getLongitude() {
+    public Double getLongitude() {
         return longitude;
     }
 
     public Long getElevation() {
         return elevation;
+    }
+
+    public static List<DataPoint> extractDataPoint(String source) {
+
+        String[] values = source.replaceAll("\\[\\[", "[").replaceAll("]]", "]").split("],");
+
+        List<DataPoint> allPoints = new ArrayList<>();
+
+        for (String item : values) {
+            String[] data = item.replaceAll("\\[", "").replaceAll("]", "").split(",");
+
+            if (data.length > 0) {
+                DataPoint dp = DataPoint.empty();
+                Long msTimestamp = Long.parseLong(data[0]);
+
+                if (data.length == 2) {
+                    dp = DataPoint.of(stripExtraQuotes(data[1]), msTimestamp);
+
+                } else if (data.length == 3) {
+                    dp = DataPoint.of(stripExtraQuotes(data[2]), msTimestamp)
+                            .atElevation(Long.parseLong(data[1]));
+
+                } else if (data.length == 4) {
+                    dp = DataPoint.of(stripExtraQuotes(data[3]), msTimestamp)
+                            .atLatitude(Double.parseDouble(data[1]))
+                            .atLongitude(Double.parseDouble(data[2]));
+
+                } else if (data.length == 5) {
+                    dp = DataPoint.of(stripExtraQuotes(data[4]), msTimestamp)
+                            .atLatitude(Double.parseDouble(data[1]))
+                            .atLongitude(Double.parseDouble(data[2]))
+                            .atElevation(Long.parseLong(data[3]));
+
+                }
+                allPoints.add(dp);
+            }
+        }
+        return allPoints;
+    }
+
+    private static String stripExtraQuotes(String string) {
+        if (string != null) {
+            return string.replaceAll("\"", "");
+        }
+        return "";
     }
 
     @Override

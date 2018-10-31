@@ -32,7 +32,7 @@ public class GTSOutput {
             gts.labels = populateMap(matcher.group("l"));
             gts.attributes = populateMap(matcher.group("a"));
             gts.id = stripExtraQuotes(matcher.group("i"));
-            gts.points = extractDataPoint(matcher.group("v"));
+            gts.points = DataPoint.extractDataPoint(matcher.group("v"));
 
             outputs.add(gts);
         }
@@ -45,42 +45,6 @@ public class GTSOutput {
             return string.replaceAll("\"", "");
         }
         return "";
-    }
-
-    private static List<DataPoint> extractDataPoint(String source) {
-
-        String[] values = source.replaceAll("\\[\\[", "[").replaceAll("]]", "]").split("],");
-
-        List<DataPoint> allPoints = new ArrayList<>();
-
-        for (String item : values) {
-            String[] data = item.replaceAll("\\[", "").replaceAll("]", "").split(",");
-
-            if (data.length > 0) {
-                DataPoint dp = DataPoint.empty();
-                Long msTimestamp = Long.parseLong(data[0]);
-
-                if (data.length == 2) {
-                    dp = DataPoint.of(stripExtraQuotes(data[1]), msTimestamp);
-
-                } else if (data.length == 3) {
-                    dp = DataPoint.of(stripExtraQuotes(data[2]), msTimestamp)
-                            .atElevation(Long.parseLong(data[1]));
-
-                } else if (data.length == 4) {
-                    dp = DataPoint.of(stripExtraQuotes(data[3]), msTimestamp);
-
-                } else if (data.length == 5) {
-                    dp = DataPoint.of(stripExtraQuotes(data[4]), msTimestamp)
-                            .atLatitude(Long.parseLong(data[1]))
-                            .atLongitude(Long.parseLong(data[2]))
-                            .atElevation(Long.parseLong(data[3]));
-
-                }
-                allPoints.add(dp);
-            }
-        }
-        return allPoints;
     }
 
     private static Map<String, String> populateMap(String source) {
