@@ -1,4 +1,4 @@
-module avalon.lab.warp10client {
+open module avalon.lab.warp10client {
 
     requires java.base;
     requires java.net.http;
