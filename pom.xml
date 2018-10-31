@@ -10,7 +10,7 @@
 
     <name>warp10-java-client</name>
     <description>Warp10 java client and DSL.</description>
-    <url>https://github.com/Avalon-Lab/warp10-java-client</url>
+    <url>https://avalon-lab.github.io/warp10-java-client</url>
 
     <licenses>
         <license>
@@ -22,7 +22,7 @@
     <scm>
         <connection>scm:git:git@github.com:Avalon-Lab/warp10-java-client.git</connection>
         <developerConnection>scm:git:git@github.com:Avalon-Lab/warp10-java-client.git</developerConnection>
-        <url>scm:git:git@github.com:Avalon-Lab/warp10-java-client.git</url>
+        <url>https://github.com/Avalon-Lab/warp10-java-client/</url>
     </scm>
 
     <properties>
