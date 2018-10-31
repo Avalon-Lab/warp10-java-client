@@ -10,6 +10,20 @@
 
     <name>warp10-java-client</name>
     <description>Warp10 java client and DSL.</description>
+    <url>https://github.com/Avalon-Lab/warp10-java-client</url>
+
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+    </licenses>
+
+    <scm>
+        <connection>scm:git:git@github.com:Avalon-Lab/warp10-java-client.git</connection>
+        <developerConnection>scm:git:git@github.com:Avalon-Lab/warp10-java-client.git</developerConnection>
+        <url>scm:git:git@github.com:Avalon-Lab/warp10-java-client.git</url>
+    </scm>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -18,7 +32,7 @@
 
         <maven.compiler.target>11</maven.compiler.target>
         <maven.compiler.source>11</maven.compiler.source>
-        
+
         <junit.jupiter.version>5.2.0</junit.jupiter.version>
         <assertj.core.version>3.10.0</assertj.core.version>
     </properties>

@@ -1,4 +1,6 @@
 # warp10-java-client
+[![TravisCI Build Status][travis-badge]][travis-badge-url]
+
 
 This library provide a Java 11 Client and a DSL for Warp10.  
 It use the newly generally available (with jdk11) HTTP API (HttpClient, HttpRequest, HttpResponse).  
