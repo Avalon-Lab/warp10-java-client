@@ -1,9 +1,9 @@
-package fr.avalonlab.warp10.DSL.framework;
+package fr.avalonlab.warp10.dsl.framework;
 
 import org.junit.jupiter.api.Test;
 
-import static fr.avalonlab.warp10.DSL.Warpscript.NOW;
-import static fr.avalonlab.warp10.DSL.Warpscript.SWAP;
+import static fr.avalonlab.warp10.dsl.Warpscript.NOW;
+import static fr.avalonlab.warp10.dsl.Warpscript.SWAP;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class BucketizeTest {
@@ -11,10 +11,10 @@ class BucketizeTest {
     @Test
     void swapBucketizer() {
         Bucketize bucket = Bucketize.builder()
-                .GTS(SWAP)
-                .BUCKETIZER("bucketizer.sum")
-                .LASTBUCKET(NOW)
-                .BUCKETCOUNT(1);
+                .gts(SWAP)
+                .bucketizer("bucketizer.sum")
+                .lastbucket(NOW)
+                .bucketcount(1);
 
         String result = bucket.formatScript();
 
@@ -22,7 +22,7 @@ class BucketizeTest {
     }
 
     private String expectedSwapBucketizer() {
-        return "[ SWAP bucketizer.sum NOW 0 1 ] BUCKETIZE";
+        return "[ SWAP bucketizer.sum now 0 1 ] BUCKETIZE";
     }
 
 }

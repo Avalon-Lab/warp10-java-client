@@ -1,4 +1,4 @@
-package fr.avalonlab.warp10.DSL.framework;
+package fr.avalonlab.warp10.dsl.framework;
 
 import org.junit.jupiter.api.Test;
 
@@ -11,12 +11,12 @@ class FetchTest {
     @Test
     void fetchWithTimeStamp() {
         Fetch script = Fetch.builder()
-                .CLASS("~class.*")
+                .classSelector("~class.*")
                 .addLabel("foo", "bar")
                 .addExactMatchLabel("john", "doe")
                 .addRegExpLabel("hero", "bat*")
-                .START(ZonedDateTime.parse("2013-01-01T00:00:00Z"))
-                .END(ZonedDateTime.parse("2014-01-01T00:00:00+01:00"));
+                .start(ZonedDateTime.parse("2013-01-01T00:00:00Z"))
+                .end(ZonedDateTime.parse("2014-01-01T00:00:00+01:00"));
 
         String result = script.formatScript();
 
@@ -24,16 +24,16 @@ class FetchTest {
     }
 
     private String expectedFetchWithTimeStamp() {
-        return "[ $TOKEN '~class.*' { 'foo' 'bar' 'john' '=doe' 'hero' '~bat*' } '2013-01-01T00:00:00Z' '2014-01-01T00:00:00+01:00' ] FETCH";
+        return "[ $token '~class.*' { 'foo' 'bar' 'john' '=doe' 'hero' '~bat*' } '2013-01-01T00:00:00Z' '2014-01-01T00:00:00+01:00' ] FETCH";
     }
 
     @Test
     void fetchWithTimespan() {
         Fetch script = Fetch.builder()
-                .CLASS("~class.*")
+                .classSelector("~class.*")
                 .addLabel("foo", "bar")
-                .NOW()
-                .TIMESPAN(-90);
+                .now()
+                .timespan(-90);
 
         String result = script.formatScript();
 
@@ -41,6 +41,6 @@ class FetchTest {
     }
 
     private String expectedFetchWithTimespan() {
-        return "[ $TOKEN '~class.*' { 'foo' 'bar' } NOW -90 ] FETCH";
+        return "[ $token '~class.*' { 'foo' 'bar' } now -90 ] FETCH";
     }
 }

@@ -8,8 +8,8 @@ open module avalon.lab.warp10client {
 
     exports fr.avalonlab.warp10.exception;
 
-    exports fr.avalonlab.warp10.DSL;
-    exports fr.avalonlab.warp10.DSL.framework;
+    exports fr.avalonlab.warp10.dsl;
+    exports fr.avalonlab.warp10.dsl.framework;
 
     exports fr.avalonlab.warp10.injection;
 }

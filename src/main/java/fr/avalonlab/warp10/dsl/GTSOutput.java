@@ -1,4 +1,4 @@
-package fr.avalonlab.warp10.DSL;
+package fr.avalonlab.warp10.dsl;
 
 
 import java.util.ArrayList;
@@ -60,23 +60,22 @@ public class GTSOutput {
                 DataPoint dp = DataPoint.empty();
                 Long msTimestamp = Long.parseLong(data[0]);
 
-                switch (data.length) {
-                    case 2:
-                        dp = DataPoint.of(stripExtraQuotes(data[1]), msTimestamp);
-                        break;
-                    case 3:
-                        dp = DataPoint.of(stripExtraQuotes(data[2]), msTimestamp)
-                                .atElevation(Long.parseLong(data[1]));
-                        break;
-                    case 4:
-                        dp = DataPoint.of(stripExtraQuotes(data[3]), msTimestamp);
-                        break;
-                    case 5:
-                        dp = DataPoint.of(stripExtraQuotes(data[4]), msTimestamp)
-                                .atLatitude(Long.parseLong(data[1]))
-                                .atLongitude(Long.parseLong(data[2]))
-                                .atElevation(Long.parseLong(data[3]));
-                        break;
+                if (data.length == 2) {
+                    dp = DataPoint.of(stripExtraQuotes(data[1]), msTimestamp);
+
+                } else if (data.length == 3) {
+                    dp = DataPoint.of(stripExtraQuotes(data[2]), msTimestamp)
+                            .atElevation(Long.parseLong(data[1]));
+
+                } else if (data.length == 4) {
+                    dp = DataPoint.of(stripExtraQuotes(data[3]), msTimestamp);
+
+                } else if (data.length == 5) {
+                    dp = DataPoint.of(stripExtraQuotes(data[4]), msTimestamp)
+                            .atLatitude(Long.parseLong(data[1]))
+                            .atLongitude(Long.parseLong(data[2]))
+                            .atElevation(Long.parseLong(data[3]));
+
                 }
                 allPoints.add(dp);
             }

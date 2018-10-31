@@ -1,4 +1,4 @@
-package fr.avalonlab.warp10.DSL.framework;
+package fr.avalonlab.warp10.dsl.framework;
 
 public class Bucketize extends Framework {
 
@@ -16,32 +16,32 @@ public class Bucketize extends Framework {
         return new Bucketize();
     }
 
-    public Bucketize GTS(String... gts) {
+    public Bucketize gts(String... gts) {
         this.gts = gts;
         return this;
     }
 
-    public Bucketize BUCKETIZER(String bucketizer) {
+    public Bucketize bucketizer(String bucketizer) {
         this.bucketizer = bucketizer;
         return this;
     }
 
-    public Bucketize LASTBUCKET(String NOW) {
+    public Bucketize lastbucket(String NOW) {
         this.lastbucket = NOW;
         return this;
     }
 
-    public Bucketize LASTBUCKET(Long lastbucket) {
+    public Bucketize lastbucket(Long lastbucket) {
         this.lastbucket = lastbucket.toString();
         return this;
     }
 
-    public Bucketize BUCKETSPAN(Long bucketspan) {
+    public Bucketize bucketspan(Long bucketspan) {
         this.bucketspan = bucketspan;
         return this;
     }
 
-    public Bucketize BUCKETCOUNT(Integer bucketcount) {
+    public Bucketize bucketcount(Integer bucketcount) {
         this.bucketcount = bucketcount;
         return this;
     }

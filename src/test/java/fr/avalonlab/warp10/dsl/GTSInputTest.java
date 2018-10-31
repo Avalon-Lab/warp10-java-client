@@ -1,4 +1,4 @@
-package fr.avalonlab.warp10.DSL;
+package fr.avalonlab.warp10.dsl;
 
 import fr.avalonlab.warp10.exception.MissingMandatoryDataException;
 import org.junit.jupiter.api.Test;
@@ -15,10 +15,10 @@ class GTSInputTest {
     @Test
     void withoutLatLonElev() {
         GTSInput newGTSInput = GTSInput.builder()
-                .TS(1380475081000000L)
-                .NAME("foo")
-                .LABEL("label1", "val1")
-                .VALUE("Toto");
+                .ts(1380475081000000L)
+                .name("foo")
+                .label("label1", "val1")
+                .value("Toto");
 
         String result = newGTSInput.toInputFormat();
 
@@ -31,11 +31,11 @@ class GTSInputTest {
         mapOfLabels.put("label2", "val2");
 
         GTSInput newGTSInput = GTSInput.builder()
-                .LAT(48.0)
-                .LON(-4.5)
-                .NAME("bar")
-                .LABELS(mapOfLabels)
-                .VALUE(-3.14);
+                .lat(48.0)
+                .lon(-4.5)
+                .name("bar")
+                .labels(mapOfLabels)
+                .value(-3.14);
 
         String result = newGTSInput.toInputFormat();
 
@@ -45,14 +45,14 @@ class GTSInputTest {
     @Test
     void fullDataGTS() {
         GTSInput newGTSInput = GTSInput.builder()
-                .TS(1380475081123456L)
-                .LAT(45.0)
-                .LON(-0.01)
-                .ELEV(10000000L)
-                .NAME("foobar")
-                .LABEL("label0", "val0")
-                .LABEL("label1", "val1")
-                .VALUE(Boolean.TRUE);
+                .ts(1380475081123456L)
+                .lat(45.0)
+                .lon(-0.01)
+                .elev(10000000L)
+                .name("foobar")
+                .label("label0", "val0")
+                .label("label1", "val1")
+                .value(Boolean.TRUE);
 
         String result = newGTSInput.toInputFormat();
 
@@ -62,14 +62,14 @@ class GTSInputTest {
     @Test
     void withZoneDateTimeTS() {
         GTSInput newGTSInput = GTSInput.builder()
-                .TS(ZonedDateTime.parse("2018-05-26T00:00:00+02:00"))
-                .LAT(45.0)
-                .LON(-0.01)
-                .ELEV(10000000L)
-                .NAME("foobar")
-                .LABEL("label0", "val0")
-                .LABEL("label1", "val1")
-                .VALUE("Toto");
+                .ts(ZonedDateTime.parse("2018-05-26T00:00:00+02:00"))
+                .lat(45.0)
+                .lon(-0.01)
+                .elev(10000000L)
+                .name("foobar")
+                .label("label0", "val0")
+                .label("label1", "val1")
+                .value("Toto");
 
         String result = newGTSInput.toInputFormat();
 
@@ -78,10 +78,10 @@ class GTSInputTest {
 
     @Test
     void labelsAreMandatory() {
-        Throwable exception = assertThrows(MissingMandatoryDataException.class, () -> GTSInput.builder().NAME("toto").toInputFormat());
+        Throwable exception = assertThrows(MissingMandatoryDataException.class, () -> GTSInput.builder().name("toto").toInputFormat());
 
         assertThat(exception).isInstanceOf(MissingMandatoryDataException.class);
-        assertThat(exception.getMessage()).isEqualTo("The data 'LABELS' was not set.");
+        assertThat(exception.getMessage()).isEqualTo("The data 'labels' was not set.");
     }
 
     @Test
@@ -89,14 +89,14 @@ class GTSInputTest {
         Throwable exception = assertThrows(MissingMandatoryDataException.class, () -> GTSInput.builder().toInputFormat());
 
         assertThat(exception).isInstanceOf(MissingMandatoryDataException.class);
-        assertThat(exception.getMessage()).isEqualTo("The data 'NAME' was not set.");
+        assertThat(exception.getMessage()).isEqualTo("The data 'name' was not set.");
     }
 
     @Test
     void valueIsMandatory() {
-        Throwable exception = assertThrows(MissingMandatoryDataException.class, () -> GTSInput.builder().NAME("toto").LABEL("plip", "plop").toInputFormat());
+        Throwable exception = assertThrows(MissingMandatoryDataException.class, () -> GTSInput.builder().name("toto").label("plip", "plop").toInputFormat());
 
         assertThat(exception).isInstanceOf(MissingMandatoryDataException.class);
-        assertThat(exception.getMessage()).isEqualTo("The data 'VALUE' was not set.");
+        assertThat(exception.getMessage()).isEqualTo("The data 'value' was not set.");
     }
 }

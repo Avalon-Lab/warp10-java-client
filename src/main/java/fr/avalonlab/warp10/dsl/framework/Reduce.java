@@ -1,4 +1,4 @@
-package fr.avalonlab.warp10.DSL.framework;
+package fr.avalonlab.warp10.dsl.framework;
 
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -19,7 +19,7 @@ public class Reduce extends Framework {
         return new Reduce();
     }
 
-    public Reduce GTS(String... gts) {
+    public Reduce gts(String... gts) {
         this.gts = gts;
         return this;
     }

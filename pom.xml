@@ -10,7 +10,7 @@
 
     <name>warp10-java-client</name>
     <description>Warp10 java client and DSL.</description>
-    <url>https://github.com/Avalon-Lab/warp10-java-client</url>
+    <url>https://avalon-lab.github.io/warp10-java-client</url>
 
     <licenses>
         <license>
@@ -22,7 +22,7 @@
     <scm>
         <connection>scm:git:git@github.com:Avalon-Lab/warp10-java-client.git</connection>
         <developerConnection>scm:git:git@github.com:Avalon-Lab/warp10-java-client.git</developerConnection>
-        <url>scm:git:git@github.com:Avalon-Lab/warp10-java-client.git</url>
+        <url>https://github.com/Avalon-Lab/warp10-java-client/</url>
     </scm>
 
     <properties>
@@ -35,6 +35,7 @@
 
         <junit.jupiter.version>5.2.0</junit.jupiter.version>
         <assertj.core.version>3.10.0</assertj.core.version>
+        <jacoco.agent.version>0.8.2</jacoco.agent.version>
     </properties>
 
     <dependencies>
@@ -64,11 +65,17 @@
             <version>${junit.jupiter.version}</version>
             <scope>test</scope>
         </dependency>
-
         <dependency>
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
             <version>${assertj.core.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jacoco</groupId>
+            <artifactId>org.jacoco.agent</artifactId>
+            <version>${jacoco.agent.version}</version>
+            <classifier>runtime</classifier>
             <scope>test</scope>
         </dependency>
 
@@ -101,9 +108,11 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>2.22.1</version>
                 <configuration>
-                    <argLine>
-                        --illegal-access=permit
-                    </argLine>
+                    <argLine>--illegal-access=permit</argLine>
+                    <skip>false</skip>
+                    <systemPropertyVariables>
+                        <jacoco-agent.destfile>target${file.separator}jacoco.exec</jacoco-agent.destfile>
+                    </systemPropertyVariables>
                 </configuration>
             </plugin>
             <plugin>
@@ -115,6 +124,28 @@
                         --illegal-access=permit
                     </argLine>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>${jacoco.agent.version}</version>
+                <executions>
+                    <execution>
+                        <id>instrument</id>
+                        <phase>process-classes</phase>
+                        <goals>
+                            <goal>instrument</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>restore</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>restore-instrumented-classes</goal>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
 
         </plugins>

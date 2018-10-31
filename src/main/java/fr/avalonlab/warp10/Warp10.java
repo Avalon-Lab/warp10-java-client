@@ -1,8 +1,8 @@
 package fr.avalonlab.warp10;
 
-import fr.avalonlab.warp10.DSL.GTSInput;
-import fr.avalonlab.warp10.DSL.GTSOutput;
-import fr.avalonlab.warp10.DSL.Warpscript;
+import fr.avalonlab.warp10.dsl.GTSInput;
+import fr.avalonlab.warp10.dsl.GTSOutput;
+import fr.avalonlab.warp10.dsl.Warpscript;
 import fr.avalonlab.warp10.exception.MissingMandatoryDataException;
 
 import java.io.IOException;
@@ -16,7 +16,8 @@ import java.util.concurrent.CompletableFuture;
 
 public class Warp10 {
 
-    private final HttpClient DEFAULT_HTTP_CLIENT = HttpClient.newHttpClient();
+    private static final String X_WARP_10_TOKEN = "X-Warp10-Token";
+    private static final HttpClient DEFAULT_HTTP_CLIENT = HttpClient.newHttpClient();
     private final String endPointUri;
     private String readToken;
     private String writeToken;
@@ -64,7 +65,7 @@ public class Warp10 {
         request = HttpRequest.newBuilder()
                 .uri(URI.create(endPointUri + "/update"))
                 .header("Content-Type", "text/plain")
-                .header("X-Warp10-Token", writeToken)
+                .header(X_WARP_10_TOKEN, writeToken)
                 .POST(HttpRequest.BodyPublishers.ofString(data.toInputFormat()))
                 .build();
 
@@ -79,7 +80,7 @@ public class Warp10 {
 
         request = HttpRequest.newBuilder()
                 .uri(URI.create(endPointUri + "/fetch?" + query))
-                .header("X-Warp10-Token", readToken)
+                .header(X_WARP_10_TOKEN, readToken)
                 .GET()
                 .build();
 
@@ -94,7 +95,7 @@ public class Warp10 {
 
         request = HttpRequest.newBuilder()
                 .uri(URI.create(endPointUri + "/delete?" + query))
-                .header("X-Warp10-Token", writeToken)
+                .header(X_WARP_10_TOKEN, writeToken)
                 .GET()
                 .build();
 
@@ -110,7 +111,7 @@ public class Warp10 {
         request = HttpRequest.newBuilder()
                 .uri(URI.create(endPointUri + "/exec"))
                 .header("Content-Type", "text/plain")
-                .POST(HttpRequest.BodyPublishers.ofString(warpscript.TOKEN(readToken).formatScript()))
+                .POST(HttpRequest.BodyPublishers.ofString(warpscript.token(readToken).formatScript()))
                 .build();
 
         return this;

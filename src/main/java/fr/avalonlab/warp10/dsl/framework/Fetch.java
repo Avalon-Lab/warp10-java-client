@@ -1,4 +1,4 @@
-package fr.avalonlab.warp10.DSL.framework;
+package fr.avalonlab.warp10.dsl.framework;
 
 
 import fr.avalonlab.warp10.exception.MissingMandatoryDataException;
@@ -10,11 +10,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static fr.avalonlab.warp10.DSL.Warpscript.NOW;
+import static fr.avalonlab.warp10.dsl.Warpscript.NOW;
 import static java.time.format.DateTimeFormatter.ISO_OFFSET_DATE_TIME;
 
 public class Fetch extends Framework {
 
+    private static final String UTF_8 = "utf-8";
     private String classSelector;
     private ZonedDateTime start;
     private ZonedDateTime end;
@@ -31,54 +32,54 @@ public class Fetch extends Framework {
         return new Fetch();
     }
 
-    public Fetch CLASS(String classSelector) {
+    public Fetch classSelector(String classSelector) {
         this.classSelector = classSelector;
         return this;
     }
 
-    public Fetch START(ZonedDateTime start) {
+    public Fetch start(ZonedDateTime start) {
         this.start = start;
         return this;
     }
 
-    public Fetch END(ZonedDateTime end) {
+    public Fetch end(ZonedDateTime end) {
         this.end = end;
         return this;
     }
 
-    public Fetch NOW() {
+    public Fetch now() {
         this.now = true;
         return this;
     }
 
-    public Fetch TIMESPAN(Integer timespan) {
+    public Fetch timespan(Integer timespan) {
         this.timespan = timespan;
         return this;
     }
 
-    public Fetch LABELS(Map<String, String> labelsSelectors) {
+    public Fetch labels(Map<String, String> labelsSelectors) {
         this.labelsSelectors.putAll(labelsSelectors);
         return this;
     }
 
     public Fetch addLabel(String key, String value) {
-        this.labelsSelectors.put(URLEncoder.encode(key, Charset.forName("utf-8")), URLEncoder.encode(value, Charset.forName("utf-8")));
+        this.labelsSelectors.put(URLEncoder.encode(key, Charset.forName(UTF_8)), URLEncoder.encode(value, Charset.forName(UTF_8)));
         return this;
     }
 
     public Fetch addExactMatchLabel(String key, String value) {
-        this.labelsSelectors.put(URLEncoder.encode(key, Charset.forName("utf-8")), "=" + URLEncoder.encode(value, Charset.forName("utf-8")));
+        this.labelsSelectors.put(URLEncoder.encode(key, Charset.forName(UTF_8)), "=" + URLEncoder.encode(value, Charset.forName(UTF_8)));
         return this;
     }
 
     public Fetch addRegExpLabel(String key, String value) {
-        this.labelsSelectors.put(URLEncoder.encode(key, Charset.forName("utf-8")), "~" + URLEncoder.encode(value, Charset.forName("utf-8")));
+        this.labelsSelectors.put(URLEncoder.encode(key, Charset.forName(UTF_8)), "~" + URLEncoder.encode(value, Charset.forName(UTF_8)));
         return this;
     }
 
     @Override
     public String formatScript() {
-        return "[ $TOKEN '" + classSelector + "' { " + formatLabelsSelecor() + " } " + formatTimeSelector() + " ] " + frameworkName;
+        return "[ $token '" + classSelector + "' { " + formatLabelsSelecor() + " } " + formatTimeSelector() + " ] " + frameworkName;
     }
 
     private String formatTimeSelector() {
@@ -89,7 +90,7 @@ public class Fetch extends Framework {
             return NOW + " " + timespan.toString();
         }
 
-        throw new MissingMandatoryDataException("START / END / TIMESPAN");
+        throw new MissingMandatoryDataException("start / end / timespan");
     }
 
     private String formatLabelsSelecor() {
