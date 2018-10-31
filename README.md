@@ -1,6 +1,7 @@
 # warp10-java-client
-[![TravisCI Build Status][travis-badge]][travis-badge-url]
-
+[![TravisCI Build Status](https://api.travis-ci.org/Avalon-Lab/warp10-java-client.svg?branch=master)](https://travis-ci.org/Avalon-Lab/warp10-java-client)
+[![Sonarcloud Status](https://sonarcloud.io/api/project_badges/measure?project=warp10-java-client&metric=alert_status)](https://sonarcloud.io/api/project_badges/measure?project=warp10-java-client)
+[![Sonarcloud Status](https://sonarcloud.io/api/project_badges/measure?project=warp10-java-client&metric=coverage)](https://sonarcloud.io/api/project_badges/measure?project=warp10-java-client)
 
 This library provide a Java 11 Client and a DSL for Warp10.  
 It use the newly generally available (with jdk11) HTTP API (HttpClient, HttpRequest, HttpResponse).  
