@@ -23,7 +23,6 @@ class GTSOutputTest {
         assertThat(gts.get(0).getLabels()).containsOnly(Map.entry("label", "ju+in"), Map.entry("type", "DEBIT"), Map.entry("category", "15e99-0d2a"), Map.entry(".app", "dashboard"));
     }
 
-
     @Test
     void parseWarp10GtsSingleOutputWithMultipleValue() {
         String warp10Output = "{\"c\":\"fr.avalonlab.dashboard.category.domain.Category\",\"l\":{\"type\":\"CREDIT\",\"category\":\"b414301f-08b3\",\".app\":\"dashboard\"},\"a\":{},\"v\":[[1527152658209000,50.27],[1529744658209000,150.8],[1532336658209000,600]]}";
@@ -47,7 +46,5 @@ class GTSOutputTest {
         assertThat(gts).hasSize(2);
         assertThat(gts.get(0).getLabels()).containsOnly(Map.entry("type", "CREDIT"), Map.entry("category", "b414301f-08b3"), Map.entry(".app", "dashboard"));
         assertThat(gts.get(1).getLabels()).containsOnly(Map.entry("type", "DEBIT"), Map.entry("category", "15c92e99-0d2a"), Map.entry(".app", "dashboard"));
-
     }
-
 }
