@@ -1,4 +1,4 @@
-package fr.avalonlab.warp10.DSL.framework;
+package fr.avalonlab.warp10.dsl.framework;
 
 public abstract class Framework {
 

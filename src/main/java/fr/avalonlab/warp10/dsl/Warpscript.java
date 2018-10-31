@@ -1,6 +1,6 @@
-package fr.avalonlab.warp10.DSL;
+package fr.avalonlab.warp10.dsl;
 
-import fr.avalonlab.warp10.DSL.framework.Framework;
+import fr.avalonlab.warp10.dsl.framework.Framework;
 
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -8,7 +8,7 @@ import java.util.stream.Stream;
 public class Warpscript {
 
     public static final String SWAP = "SWAP";
-    public static final String NOW = "NOW";
+    public static final String NOW = "now";
     private static final String NEW_LINE = "\n";
 
     private String rawQuery;
@@ -28,7 +28,7 @@ public class Warpscript {
         return this;
     }
 
-    public Warpscript TOKEN(String readToken) {
+    public Warpscript token(String readToken) {
         this.token = readToken;
         return this;
     }
@@ -42,7 +42,7 @@ public class Warpscript {
 
     public String formatScript() {
 
-        String script = "'" + token + "' " + "'TOKEN' STORE" + NEW_LINE;
+        String script = "'" + token + "' " + "'token' STORE" + NEW_LINE;
 
         if (rawQuery != null && token == null) {
             return rawQuery;

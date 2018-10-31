@@ -1,8 +1,8 @@
-package fr.avalonlab.warp10.DSL.framework;
+package fr.avalonlab.warp10.dsl.framework;
 
 import org.junit.jupiter.api.Test;
 
-import static fr.avalonlab.warp10.DSL.Warpscript.SWAP;
+import static fr.avalonlab.warp10.dsl.Warpscript.SWAP;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class ReduceTest {
@@ -10,7 +10,7 @@ class ReduceTest {
     @Test
     void zeroLabel() {
         Reduce reduce = Reduce.builder()
-                .GTS(SWAP)
+                .gts(SWAP)
                 .reducer("reducer.sum");
 
         String reducer = reduce.formatScript();
@@ -25,7 +25,7 @@ class ReduceTest {
     @Test
     void oneLabel() {
         Reduce reduce = Reduce.builder()
-                .GTS(SWAP)
+                .gts(SWAP)
                 .labels("type")
                 .reducer("reducer.sum");
 
@@ -41,7 +41,7 @@ class ReduceTest {
     @Test
     void twoLabel() {
         Reduce reduce = Reduce.builder()
-                .GTS(SWAP)
+                .gts(SWAP)
                 .labels("type", "time")
                 .reducer("reducer.sum");
 

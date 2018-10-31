@@ -1,4 +1,4 @@
-package fr.avalonlab.warp10.DSL;
+package fr.avalonlab.warp10.dsl;
 
 import fr.avalonlab.warp10.exception.MissingMandatoryDataException;
 
@@ -11,6 +11,8 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 public class GTSInput {
+
+    private static final String UTF_8 = "utf-8";
     private Long ts;
     private Double lat;
     private Double lon;
@@ -30,62 +32,62 @@ public class GTSInput {
         return new GTSInput();
     }
 
-    public GTSInput TS(Long timestampMicro) {
+    public GTSInput ts(Long timestampMicro) {
         this.ts = timestampMicro;
         return this;
     }
 
-    public GTSInput TS(ZonedDateTime timeStamp) {
+    public GTSInput ts(ZonedDateTime timeStamp) {
         this.ts = TimeUnit.MILLISECONDS.toMicros(timeStamp.toInstant().toEpochMilli());
         return this;
     }
 
-    public GTSInput LAT(Double lat) {
+    public GTSInput lat(Double lat) {
         this.lat = lat;
         return this;
     }
 
-    public GTSInput LON(Double lon) {
+    public GTSInput lon(Double lon) {
         this.lon = lon;
         return this;
     }
 
-    public GTSInput ELEV(Long elev) {
+    public GTSInput elev(Long elev) {
         this.elev = elev;
         return this;
     }
 
-    public GTSInput NAME(String name) {
-        this.name = URLEncoder.encode(name, Charset.forName("utf-8"));
+    public GTSInput name(String name) {
+        this.name = URLEncoder.encode(name, Charset.forName(UTF_8));
         return this;
     }
 
-    public GTSInput LABELS(Map<String, String> labels) {
+    public GTSInput labels(Map<String, String> labels) {
         this.labels.putAll(labels);
         return this;
     }
 
-    public GTSInput LABEL(String key, String value) {
-        this.labels.put(URLEncoder.encode(key, Charset.forName("utf-8")), URLEncoder.encode(value, Charset.forName("utf-8")));
+    public GTSInput label(String key, String value) {
+        this.labels.put(URLEncoder.encode(key, Charset.forName(UTF_8)), URLEncoder.encode(value, Charset.forName(UTF_8)));
         return this;
     }
 
-    public GTSInput VALUE(String value) {
+    public GTSInput value(String value) {
         this.stringValue = value;
         return this;
     }
 
-    public GTSInput VALUE(Double value) {
+    public GTSInput value(Double value) {
         this.doubleValue = value;
         return this;
     }
 
-    public GTSInput VALUE(Boolean value) {
+    public GTSInput value(Boolean value) {
         this.booleanValue = value;
         return this;
     }
 
-    public GTSInput VALUE(Long value) {
+    public GTSInput value(Long value) {
         this.longValue = value;
         return this;
     }
@@ -99,7 +101,7 @@ public class GTSInput {
 
     private String formatMandatoryFieldName() {
         if (name == null) {
-            throw new MissingMandatoryDataException("NAME");
+            throw new MissingMandatoryDataException("name");
         }
 
         return name;
@@ -117,7 +119,7 @@ public class GTSInput {
         if (labels != null && !labels.isEmpty()) {
             return labels.entrySet().stream().map(entry -> entry.getKey() + '=' + entry.getValue()).collect(Collectors.joining(","));
         }
-        throw new MissingMandatoryDataException("LABELS");
+        throw new MissingMandatoryDataException("labels");
     }
 
     private String formatOptionalLongValue(Long possibleNullValue) {
@@ -135,9 +137,9 @@ public class GTSInput {
         } else if (booleanValue != null) {
             return booleanValue ? "T" : "F";
         } else if (stringValue != null) {
-            return "'" + URLEncoder.encode(stringValue, Charset.forName("utf-8")) + "'";
+            return "'" + URLEncoder.encode(stringValue, Charset.forName(UTF_8)) + "'";
         }
-        throw new MissingMandatoryDataException("VALUE");
+        throw new MissingMandatoryDataException("value");
     }
 
 }

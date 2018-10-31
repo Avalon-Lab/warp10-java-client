@@ -1,7 +1,7 @@
 package fr.avalonlab.warp10;
 
-import fr.avalonlab.warp10.DSL.GTSInput;
-import fr.avalonlab.warp10.DSL.Warpscript;
+import fr.avalonlab.warp10.dsl.GTSInput;
+import fr.avalonlab.warp10.dsl.Warpscript;
 import fr.avalonlab.warp10.exception.MissingMandatoryDataException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -34,10 +34,10 @@ class Warp10Test {
     void init() {
         testClient = new HttpTestClient();
         input = GTSInput.builder()
-                .TS(1380475081000000L)
-                .NAME("foo")
-                .LABEL("label1", "val1")
-                .VALUE("Toto");
+                .ts(1380475081000000L)
+                .name("foo")
+                .label("label1", "val1")
+                .value("Toto");
     }
 
     @Test

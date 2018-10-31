@@ -1,4 +1,4 @@
-package fr.avalonlab.warp10.DSL;
+package fr.avalonlab.warp10.dsl;
 
 import org.junit.jupiter.api.Test;
 
