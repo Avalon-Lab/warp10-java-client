@@ -31,4 +31,4 @@ jobs:
         env:
           GITHUB_USERNAME: x-access-token
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: mvn --settings settings.xml deploy
+        run: mvn --settings settings.xml -P github-snapshot deploy

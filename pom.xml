@@ -32,9 +32,9 @@
             <url>https://maven.pkg.github.com/Avalon-Lab/warp10-java-client</url>
         </repository>
         <snapshotRepository>
-            <id>github</id>
+            <id>github-snapshot</id>
             <name>GitHub Avalon-Lab Apache Maven Packages</name>
-            <url>https://maven.pkg.github.com/Avalon-Lab/warp10-java-client/snapshot</url>
+            <url>https://maven.pkg.github.com/Avalon-Lab/snapshot/warp10-java-client</url>
         </snapshotRepository>
     </distributionManagement>
 
