@@ -32,5 +32,5 @@ jobs:
           GITHUB_USERNAME: x-access-token
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run:
-          mvn --settings settings.xml deploy
+          mvn -B --settings settings.xml deploy -file pom.xml
         
