@@ -28,5 +28,9 @@ jobs:
         with:
           java-version: 11
       - name: Deploy to Github Maven
-        run: mvn deploy -Dregistry=https://maven.pkg.github.com/Avalon-Lab -Dtoken=${{ secrets.GITHUB_TOKEN }}
+        env:
+          GITHUB_USERNAME: x-access-token
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run:
+          mvn --settings settings.xml deploy
         
