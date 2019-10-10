@@ -1,5 +1,5 @@
 # warp10-java-client
-[![TravisCI Build Status](https://api.travis-ci.org/Avalon-Lab/warp10-java-client.svg?branch=master)](https://travis-ci.org/Avalon-Lab/warp10-java-client)
+![](https://github.com/Avalon-Lab/warp10-java-client/workflows/Java%20CI/badge.svg)
 [![Sonarcloud Status](https://sonarcloud.io/api/project_badges/measure?project=warp10-java-client&metric=alert_status)](https://sonarcloud.io/api/project_badges/measure?project=warp10-java-client)
 [![Sonarcloud Status](https://sonarcloud.io/api/project_badges/measure?project=warp10-java-client&metric=coverage)](https://sonarcloud.io/api/project_badges/measure?project=warp10-java-client)
 
