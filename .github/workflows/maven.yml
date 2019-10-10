@@ -29,7 +29,7 @@ jobs:
           java-version: 11
       - name: Setup Git
         run: |
-          git config --local user.email "ci@avalon-lab.fr.com"
+          git config --local user.email "ci@avalon-lab.fr"
           git config --local user.name "Avalon Lab CI"
       - name: Deploy to Github Maven
         env:
