@@ -27,6 +27,10 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 11
+      - name: Setup Git
+        run: |
+          git config --local user.email "ci@avalon-lab.fr.com"
+          git config --local user.name "Avalon Lab CI"
       - name: Deploy to Github Maven
         env:
           GITHUB_USERNAME: x-access-token
