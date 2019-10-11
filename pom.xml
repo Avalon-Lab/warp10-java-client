@@ -20,8 +20,8 @@
     </licenses>
 
     <scm>
-        <connection>scm:git:git@github.com:Avalon-Lab/warp10-java-client.git</connection>
-        <developerConnection>scm:git:git@github.com:Avalon-Lab/warp10-java-client.git</developerConnection>
+        <connection>scm:git:https://${env.CI_USER}:${env.CI_TOKEN}@github.com:Avalon-Lab/warp10-java-client.git</connection>
+        <developerConnection>scm:git:https://${env.CI_USER}:${env.CI_TOKEN}@github.com:Avalon-Lab/warp10-java-client.git</developerConnection>
         <url>https://github.com/Avalon-Lab/warp10-java-client/</url>
     </scm>
          
