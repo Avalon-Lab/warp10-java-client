@@ -18,7 +18,7 @@ stages:
 build:
   stage: build
   script:
-    - mvn $MAVEN_CLI_OPTS -q -Dsonar.projectKey=warp10-java-client -Dsonar.organization=avalon-lab -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONAR_TOKEN clean install sonar:sonar
+    - mvn $MAVEN_CLI_OPTS -q -Dsonar.projectKey=warp10-java-client -Dsonar.organization=avalon-lab -Dsonar.branch.name=$CI_COMMIT_REF_NAME -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONAR_TOKEN clean install sonar:sonar
 
 deploy:
   stage: deploy
