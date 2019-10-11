@@ -15,19 +15,28 @@ stages:
   - deploy
   - release
 
-build:
+build_integration:
   stage: build
   script:
-    - mvn $MAVEN_CLI_OPTS -q -Dsonar.projectKey=warp10-java-client -Dsonar.organization=avalon-lab -Dsonar.branch.name=$CI_COMMIT_REF_NAME -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONAR_TOKEN clean install sonar:sonar
+    - mvn $MAVEN_CLI_OPTS -q -Dsonar.projectKey=warp10-java-client -Dsonar.organization=avalon-lab -Dsonar.branch.name=integration -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONAR_TOKEN clean install sonar:sonar
+  only:
+    - integration
 
-deploy:
+deploy_snapshot:
   stage: deploy
   script:
     - mvn $MAVEN_CLI_OPTS deploy -s ci_settings.xml
   only:
     - integration
 
-release:
+build_master:
+  stage: build
+  script:
+    - mvn $MAVEN_CLI_OPTS -q -Dsonar.projectKey=warp10-java-client -Dsonar.organization=avalon-lab -Dsonar.branch.name=master -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONAR_TOKEN clean install sonar:sonar
+  only:
+    - master
+
+release_master:
   stage: release
   when: manual
   script:
