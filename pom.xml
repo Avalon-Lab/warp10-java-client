@@ -23,16 +23,25 @@
         <connection>scm:git:git@github.com:Avalon-Lab/warp10-java-client.git</connection>
         <developerConnection>scm:git:git@github.com:Avalon-Lab/warp10-java-client.git</developerConnection>
         <url>https://github.com/Avalon-Lab/warp10-java-client/</url>
-        <tag>HEAD</tag>
     </scm>
          
+    <repositories>
+    <repository>
+        <id>gitlab-maven</id>
+        <url>https://gitlab.com/api/v4/projects/${env.CI_PROJECT_ID}/packages/maven</url>
+    </repository>
+    </repositories>
     <distributionManagement>
-        <repository>
-            <id>github</id>
-            <name>GitHub Avalon-Lab Apache Maven Packages</name>
-            <url>https://maven.pkg.github.com/Avalon-Lab/warp10-java-client</url>
-        </repository>
+    <repository>
+        <id>gitlab-maven</id>
+        <url>https://gitlab.com/api/v4/projects/${env.CI_PROJECT_ID}/packages/maven</url>
+    </repository>
+    <snapshotRepository>
+        <id>gitlab-maven</id>
+        <url>https://gitlab.com/api/v4/projects/${env.CI_PROJECT_ID}/packages/maven</url>
+    </snapshotRepository>
     </distributionManagement>
+
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
