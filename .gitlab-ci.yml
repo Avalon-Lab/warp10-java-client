@@ -42,6 +42,7 @@ release_master:
   script:
     - git config --global user.email "ci@avalon-lab.fr"
     - git config --global user.name "Avalon Lab CI"
+    - git checkout -B master
     - mvn $MAVEN_CLI_OPTS -Dusername=$CI_USER -Dpassword=$CI_TOKEN release:prepare -s ci_settings.xml -B -DskipTests=true
     - mvn $MAVEN_CLI_OPTS -Dusername=$CI_USER -Dpassword=$CI_TOKEN release:perform -s ci_settings.xml -B -DskipTests=true
   only:
