@@ -17,6 +17,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.Duration;
+import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
@@ -87,6 +88,34 @@ class Warp10Test {
         assertThat(testClient.calculatedRequest.method()).isEqualTo("POST");
         assertThat(testClient.calculatedRequest.headers().firstValue("X-Warp10-Token")).contains("908766");
         assertThat(testClient.calculatedRequest.headers().firstValue("Content-Type")).contains("text/plain");
+    }
+
+    @Test
+    void batchIngress() throws IOException, InterruptedException {
+        GTSInput input2 = GTSInput.builder()
+                .ts(1380475082000000L)
+                .name("foo")
+                .label("label1", "val1")
+                .value("Toto2");
+
+        GTSInput input3 = GTSInput.builder()
+                .ts(1380475083000000L)
+                .name("foo")
+                .label("label1", "val1")
+                .value("Toto3");
+
+
+        Warp10 warp10 = Warp10.instance(ENDPOINT_URL)
+                .withClient(testClient)
+                .withWriteToken("908766")
+                .ingress(List.of(input, input2, input3));
+
+        warp10.send();
+
+        assertThat(testClient.calculatedRequest.uri()).isEqualTo(URI.create("http://hello/update"));
+        assertThat(testClient.calculatedRequest.method()).isEqualTo("POST");
+        assertThat(testClient.calculatedRequest.headers().firstValue("X-Warp10-Token")).contains("908766");
+        assertThat(testClient.calculatedRequest.headers().firstValue("Content-Type")).contains("application/gzip");
     }
 
     @Test
