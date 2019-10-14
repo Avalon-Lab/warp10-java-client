@@ -4,6 +4,7 @@ import fr.avalonlab.warp10.exception.MissingMandatoryDataException;
 
 import java.net.URLEncoder;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.time.ZonedDateTime;
 import java.util.HashMap;
 import java.util.Map;
@@ -12,7 +13,6 @@ import java.util.stream.Collectors;
 
 public class GTSInput {
 
-    private static final String UTF_8 = "utf-8";
     private Long ts;
     private Double lat;
     private Double lon;
@@ -28,8 +28,31 @@ public class GTSInput {
         this.labels = new HashMap<>();
     }
 
+    /**
+     * GTSInput Builder
+     *
+     * @return new GTSInput instance
+     */
     public static GTSInput builder() {
         return new GTSInput();
+    }
+
+    /**
+     * Create a new GTSInput instance based on other
+     * GTSInput data (ts, lat, lon, elev, name and labels)
+     *
+     * @param otherPoint GTSInput from which to create new point
+     * @return GTSInput
+     */
+    public static GTSInput from(GTSInput otherPoint) {
+        var newPoint = new GTSInput();
+
+        return newPoint.ts(otherPoint.ts)
+                .lat(otherPoint.lat)
+                .lon(otherPoint.lon)
+                .elev(otherPoint.elev)
+                .name(otherPoint.name)
+                .labels(otherPoint.labels);
     }
 
     public GTSInput ts(Long timestampMicro) {
@@ -58,7 +81,7 @@ public class GTSInput {
     }
 
     public GTSInput name(String name) {
-        this.name = URLEncoder.encode(name, Charset.forName(UTF_8));
+        this.name = URLEncoder.encode(name, StandardCharsets.UTF_8);
         return this;
     }
 
@@ -68,7 +91,7 @@ public class GTSInput {
     }
 
     public GTSInput label(String key, String value) {
-        this.labels.put(URLEncoder.encode(key, Charset.forName(UTF_8)), URLEncoder.encode(value, Charset.forName(UTF_8)));
+        this.labels.put(URLEncoder.encode(key, StandardCharsets.UTF_8), URLEncoder.encode(value, StandardCharsets.UTF_8));
         return this;
     }
 
@@ -137,7 +160,7 @@ public class GTSInput {
         } else if (booleanValue != null) {
             return booleanValue ? "T" : "F";
         } else if (stringValue != null) {
-            return "'" + URLEncoder.encode(stringValue, Charset.forName(UTF_8)) + "'";
+            return "'" + URLEncoder.encode(stringValue, StandardCharsets.UTF_8) + "'";
         }
         throw new MissingMandatoryDataException("value");
     }
