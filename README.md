@@ -15,6 +15,34 @@ It's features reflect currently what we need for our project.**
 [Warp10](http://www.warp10.io/) is a Geo-Time Series database, unlike many databases there is no driver, you interact
 with the database via its own REST API.
 
+## Adding Warp 10 Java Client to your build
+Currently, warp10-java-client is available within Gitlab's Maven repository.  
+Both Release and Snapshot jars are available.
+
+First, you need to add the repository information : 
+
+```xml
+<repositories>
+    <repository>
+      <id>gitlab-maven</id>
+      url>https://gitlab.com/api/v4/groups/2941657/-/packages/maven</url>
+    </repository>
+ </repositories>
+```
+2941657 is the Gitlab ID of [Avalon Lab OSS projects](https://gitlab.com/avalon-lab/oss).  
+
+Then  you can add the dependency :
+
+```xml
+<dependency>
+  <groupId>fr.avalonlab.warp10</groupId>
+  <artifactId>warp10-java-client</artifactId>
+  <version>1.1</version>
+  <!-- or, for Snapshot: -->
+  <version>1.2-SNAPSHOT</version>
+</dependency>
+``` 
+
 ## Reference Documentation
 
 The reference documentation is available at https://avalon-lab.github.io/warp10-java-client/

@@ -99,4 +99,21 @@ class GTSInputTest {
         assertThat(exception).isInstanceOf(MissingMandatoryDataException.class);
         assertThat(exception.getMessage()).isEqualTo("The data 'value' was not set.");
     }
+
+    @Test
+    void canCreateGTSInputFromAnOtherGTSInput() {
+        GTSInput point = GTSInput.builder()
+                .ts(1380475081123456L)
+                .lat(45.0)
+                .lon(-0.01)
+                .elev(10000000L)
+                .name("foobar")
+                .label("label0", "val0")
+                .label("label1", "val1")
+                .value(Boolean.TRUE);
+
+        GTSInput otherPoint = GTSInput.from(point);
+
+        assertThat(otherPoint).isEqualToComparingOnlyGivenFields(point, "ts","lat","lon", "elev", "name", "labels");
+    }
 }

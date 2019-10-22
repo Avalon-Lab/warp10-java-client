@@ -1,18 +1,19 @@
 package fr.avalonlab.warp10;
 
 import fr.avalonlab.warp10.dsl.GTSInput;
-import fr.avalonlab.warp10.dsl.GTSOutput;
 import fr.avalonlab.warp10.dsl.Warpscript;
 import fr.avalonlab.warp10.exception.MissingMandatoryDataException;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.stream.Collectors;
+import java.util.zip.GZIPOutputStream;
 
 public class Warp10 {
 
@@ -72,6 +73,37 @@ public class Warp10 {
         return this;
     }
 
+    public Warp10 ingress(List<GTSInput> data) throws IOException {
+
+        if (writeToken == null) {
+            throw new MissingMandatoryDataException("WRITE_TOKEN");
+        }
+
+        String batchDatas = data.stream().map(GTSInput::toInputFormat).collect(Collectors.joining("\n"));
+
+        // batchDatas.getBytes(StandardCharsets.UTF_8)
+
+        request = HttpRequest.newBuilder()
+                .uri(URI.create(endPointUri + "/update"))
+                .header("Content-Type", "application/gzip")
+                .header(X_WARP_10_TOKEN, writeToken)
+                .POST(HttpRequest.BodyPublishers.ofByteArray(compressData(batchDatas)))
+                .build();
+
+        return this;
+    }
+
+    private byte[] compressData(String data) throws IOException {
+        ByteArrayOutputStream bos = new ByteArrayOutputStream(data.length());
+        GZIPOutputStream gzip = new GZIPOutputStream(bos);
+        gzip.write(data.getBytes());
+        gzip.close();
+        byte[] compressed = bos.toByteArray();
+        bos.close();
+
+        return compressed;
+    }
+
     public Warp10 fetch(String query) {
 
         if (readToken == null) {
@@ -117,19 +149,12 @@ public class Warp10 {
         return this;
     }
 
-    public List<GTSOutput> send() throws IOException, InterruptedException {
-
-        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-
-        if (response != null) {
-            return GTSOutput.fromOutputFormat(response.body());
-        }
-
-        return new ArrayList<>();
+    public HttpResponse<String> send() throws IOException, InterruptedException {
+        return client.send(request, HttpResponse.BodyHandlers.ofString());
     }
 
-    public CompletableFuture<List<GTSOutput>> sendAsync() {
-        return client.sendAsync(request, HttpResponse.BodyHandlers.ofString()).thenApply(response -> GTSOutput.fromOutputFormat(response.body()));
+    public CompletableFuture<HttpResponse<String>> sendAsync() {
+        return client.sendAsync(request, HttpResponse.BodyHandlers.ofString());
     }
 
 

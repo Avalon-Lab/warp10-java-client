@@ -47,4 +47,13 @@ class GTSOutputTest {
         assertThat(gts.get(0).getLabels()).containsOnly(Map.entry("type", "CREDIT"), Map.entry("category", "b414301f-08b3"), Map.entry(".app", "dashboard"));
         assertThat(gts.get(1).getLabels()).containsOnly(Map.entry("type", "DEBIT"), Map.entry("category", "15c92e99-0d2a"), Map.entry(".app", "dashboard"));
     }
+
+    @Test
+    void dontFailWithNullOutput() {
+        String complexOutput = null;
+
+        List<GTSOutput> gts = GTSOutput.fromOutputFormat(complexOutput);
+
+        assertThat(gts).hasSize(0);
+    }
 }
