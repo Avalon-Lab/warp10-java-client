@@ -1,7 +1,6 @@
 package fr.avalonlab.warp10;
 
 import fr.avalonlab.warp10.dsl.GTSInput;
-import fr.avalonlab.warp10.dsl.GTSOutput;
 import fr.avalonlab.warp10.dsl.Warpscript;
 import fr.avalonlab.warp10.exception.MissingMandatoryDataException;
 
@@ -11,8 +10,6 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
@@ -152,19 +149,12 @@ public class Warp10 {
         return this;
     }
 
-    public List<GTSOutput> send() throws IOException, InterruptedException {
-
-        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-
-        if (response != null) {
-            return GTSOutput.fromOutputFormat(response.body());
-        }
-
-        return new ArrayList<>();
+    public HttpResponse<String> send() throws IOException, InterruptedException {
+        return client.send(request, HttpResponse.BodyHandlers.ofString());
     }
 
-    public CompletableFuture<List<GTSOutput>> sendAsync() {
-        return client.sendAsync(request, HttpResponse.BodyHandlers.ofString()).thenApply(response -> GTSOutput.fromOutputFormat(response.body()));
+    public CompletableFuture<HttpResponse<String>> sendAsync() {
+        return client.sendAsync(request, HttpResponse.BodyHandlers.ofString());
     }
 
 

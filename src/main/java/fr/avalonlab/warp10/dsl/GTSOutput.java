@@ -19,6 +19,8 @@ public class GTSOutput {
     private List<DataPoint> points;
 
     public static List<GTSOutput> fromOutputFormat(String output) {
+        if (output == null || output.isBlank()) return new ArrayList<>();
+
         final String regex = "\\{(\"c\"):(?<c>.*?),(\"l\"):(?<l>\\{.*?\\}),(\"a\"):(?<a>\\{.*?\\}),((\"i\"):(?<i>\".*?\"),)?(\"v\"):(?<v>\\[\\[.*?]])\\}";
 
         Matcher matcher = Pattern.compile(regex, Pattern.MULTILINE).matcher(output);
