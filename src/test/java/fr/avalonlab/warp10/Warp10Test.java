@@ -108,7 +108,7 @@ class Warp10Test {
         Warp10 warp10 = Warp10.instance(ENDPOINT_URL)
                 .withClient(testClient)
                 .withWriteToken("908766")
-                .ingress(List.of(input, input2, input3));
+                .ingressGZip(List.of(input.toInputFormat(), input2.toInputFormat(), input3.toInputFormat()));
 
         warp10.send();
 
