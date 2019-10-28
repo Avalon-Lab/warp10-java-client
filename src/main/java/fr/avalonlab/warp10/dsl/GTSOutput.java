@@ -21,7 +21,7 @@ public class GTSOutput {
     public static List<GTSOutput> fromOutputFormat(String output) {
         if (output == null || output.isBlank()) return new ArrayList<>();
 
-        final String regex = "\\{(\"c\"):(?<c>.*?),(\"l\"):(?<l>\\{.*?\\}),(\"a\"):(?<a>\\{.*?\\}),((\"i\"):(?<i>\".*?\"),)?(\"v\"):(?<v>\\[\\[.*?]])\\}";
+        final String regex = "\\{(\"c\"):(?<c>.*?),(\"l\"):(?<l>\\{.*?\\}),(\"a\"):(?<a>\\{.*?\\}),(\"la\"):(?<la>.*?),((\"i\"):(?<i>\".*?\"),)?(\"v\"):(?<v>\\[\\[.*?]])\\}";
 
         Matcher matcher = Pattern.compile(regex, Pattern.MULTILINE).matcher(output);
 
