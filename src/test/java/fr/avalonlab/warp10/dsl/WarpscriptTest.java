@@ -14,9 +14,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class WarpscriptTest {
 
+    private final String NEW_LINE = System.getProperty("line.separator");
+
     @Test
     void warpscriptFromRawQuery() {
-        String rawQuery = "'34RT-REE2-RERER' 'MY_TOKEN' STORE\n"
+        String rawQuery = "'34RT-REE2-RERER' 'MY_TOKEN' STORE" + NEW_LINE
                 + "my warpscipt command";
 
         String script = Warpscript.builder().rawQuery(rawQuery).formatScript();
@@ -26,8 +28,8 @@ class WarpscriptTest {
 
     @Test
     void warpscriptFromRawQueryWithToken() {
-        String rawQuery = "my super\n"
-                + "warpscript\n"
+        String rawQuery = "my super" + NEW_LINE
+                + "warpscript" + NEW_LINE
                 + "command";
 
         String script = Warpscript.builder().token("44TT-55Yy-KJ98").rawQuery(rawQuery).formatScript();
@@ -51,17 +53,17 @@ class WarpscriptTest {
     }
 
     private String expectedWarpScriptWithToken() {
-        return "'44TT-55Yy-KJ98' 'token' STORE\n" +
-                "my super\n" +
-                "warpscript\n" +
+        return "'44TT-55Yy-KJ98' 'token' STORE" + NEW_LINE +
+                "my super" + NEW_LINE +
+                "warpscript" + NEW_LINE +
                 "command";
     }
 
 
     private String expectedWarpScript() {
-        return "'READ_TOKEN' 'token' STORE\n" +
-                "[ $token '~fr.avalonlab.Test.*' {  } '2018-04-20T00:00:00Z' '2018-08-28T00:00:00Z' ] FETCH\n" +
-                "[ SWAP bucketizer.sum now 0 1 ] BUCKETIZE\n" +
+        return "'READ_TOKEN' 'token' STORE" + NEW_LINE +
+                "[ $token '~fr.avalonlab.Test.*' {  } '2018-04-20T00:00:00Z' '2018-08-28T00:00:00Z' ] FETCH" + NEW_LINE +
+                "[ SWAP bucketizer.sum now 0 1 ] BUCKETIZE" + NEW_LINE +
                 "[ SWAP [ 'type' ] reducer.sum ] REDUCE";
     }
 }

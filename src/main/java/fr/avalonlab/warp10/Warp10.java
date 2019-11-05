@@ -79,9 +79,10 @@ public class Warp10 {
             throw new MissingMandatoryDataException("WRITE_TOKEN");
         }
 
-        String batchData = String.join("\n", data);
+        String batchData = String.join(System.getProperty("line.separator"), data);
 
         request = HttpRequest.newBuilder()
+                .version(HttpClient.Version.HTTP_1_1)
                 .uri(URI.create(endPointUri + "/update"))
                 .header("Content-Type", "application/gzip")
                 .header(X_WARP_10_TOKEN, writeToken)

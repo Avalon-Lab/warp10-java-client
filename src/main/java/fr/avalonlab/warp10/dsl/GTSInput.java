@@ -3,7 +3,6 @@ package fr.avalonlab.warp10.dsl;
 import fr.avalonlab.warp10.exception.MissingMandatoryDataException;
 
 import java.net.URLEncoder;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.time.ZonedDateTime;
 import java.util.HashMap;
@@ -115,11 +114,18 @@ public class GTSInput {
         return this;
     }
 
+    public String getLabel(String key) {
+        return labels.getOrDefault(key, "");
+    }
+
     public String toInputFormat() {
 
-        String warp10Format = "%s/%s/%s %s{%s} %s";
+        return formatOptionalLongValue(ts) + "/" + formatOptionalLatLon() + "/" + formatOptionalLongValue(elev) + " " + formatMandatoryFieldName() + "{" + formatLabels() + "} " + formatValue();
+    }
 
-        return String.format(warp10Format, formatOptionalLongValue(ts), formatOptionalLatLon(), formatOptionalLongValue(elev), formatMandatoryFieldName(), formatLabels(), formatValue());
+    @Override
+    public String toString() {
+        return this.toInputFormat();
     }
 
     private String formatMandatoryFieldName() {
