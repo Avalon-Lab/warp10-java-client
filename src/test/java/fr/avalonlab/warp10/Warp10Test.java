@@ -108,7 +108,7 @@ class Warp10Test {
         Warp10 warp10 = Warp10.instance(ENDPOINT_URL)
                 .withClient(testClient)
                 .withWriteToken("908766")
-                .ingress(List.of(input, input2, input3));
+                .ingressGZip(List.of(input.toInputFormat(), input2.toInputFormat(), input3.toInputFormat()));
 
         warp10.send();
 
@@ -168,10 +168,36 @@ class Warp10Test {
     }
 
     @Test
+    void execWithTimeout() throws IOException, InterruptedException {
+        Warp10 warp10 = Warp10.instance(ENDPOINT_URL)
+                .withClient(testClient)
+                .withReadToken("3442GFG")
+                .execWithTimeout(Warpscript.builder().rawQuery("toto"), Duration.ofMinutes(5));
+
+        warp10.send();
+
+        assertThat(testClient.calculatedRequest.uri()).isEqualTo(URI.create("http://hello/exec"));
+        assertThat(testClient.calculatedRequest.method()).isEqualTo("POST");
+        assertThat(testClient.calculatedRequest.headers().firstValue("X-Warp10-Token")).isEmpty();
+        assertThat(testClient.calculatedRequest.headers().firstValue("Content-Type")).contains("text/plain");
+        assertThat(testClient.calculatedRequest.timeout()).hasValue(Duration.ofMinutes(5));
+    }
+
+    @Test
     void checkExecMandatoryReadToken() {
         Throwable exception = assertThrows(MissingMandatoryDataException.class, () -> Warp10.instance(ENDPOINT_URL)
                 .withClient(testClient)
                 .exec(Warpscript.builder().rawQuery("toto")));
+
+        assertThat(exception).isInstanceOf(MissingMandatoryDataException.class);
+        assertThat(exception.getMessage()).isEqualTo("The data 'READ_TOKEN' was not set.");
+    }
+
+    @Test
+    void checkExecWithTimeoutMandatoryReadToken() {
+        Throwable exception = assertThrows(MissingMandatoryDataException.class, () -> Warp10.instance(ENDPOINT_URL)
+                .withClient(testClient)
+                .execWithTimeout(Warpscript.builder().rawQuery("toto"), Duration.ofMinutes(5)));
 
         assertThat(exception).isInstanceOf(MissingMandatoryDataException.class);
         assertThat(exception.getMessage()).isEqualTo("The data 'READ_TOKEN' was not set.");

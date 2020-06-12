@@ -9,7 +9,7 @@ public class Warpscript {
 
     public static final String SWAP = "SWAP";
     public static final String NOW = "now";
-    private static final String NEW_LINE = "\n";
+    private static final String NEW_LINE = System.getProperty("line.separator");
 
     private String rawQuery;
     private String token;
