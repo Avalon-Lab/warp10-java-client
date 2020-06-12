@@ -10,6 +10,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.time.Duration;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
@@ -141,6 +142,22 @@ public class Warp10 {
 
         request = HttpRequest.newBuilder()
                 .uri(URI.create(endPointUri + "/exec"))
+                .header("Content-Type", "text/plain")
+                .POST(HttpRequest.BodyPublishers.ofString(warpscript.token(readToken).formatScript()))
+                .build();
+
+        return this;
+    }
+
+    public Warp10 execWithTimeout(Warpscript warpscript, Duration timeout) {
+
+        if (readToken == null) {
+            throw new MissingMandatoryDataException("READ_TOKEN");
+        }
+
+        request = HttpRequest.newBuilder()
+                .uri(URI.create(endPointUri + "/exec"))
+                .timeout(timeout)
                 .header("Content-Type", "text/plain")
                 .POST(HttpRequest.BodyPublishers.ofString(warpscript.token(readToken).formatScript()))
                 .build();
