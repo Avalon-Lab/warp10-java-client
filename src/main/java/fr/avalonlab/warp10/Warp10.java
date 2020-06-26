@@ -13,10 +13,14 @@ import java.net.http.HttpResponse;
 import java.time.Duration;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
-import java.util.stream.Collectors;
+import java.util.function.Supplier;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.zip.GZIPOutputStream;
 
 public class Warp10 {
+
+    private final Logger logger = Logger.getLogger(getClass().getName());
 
     private static final String X_WARP_10_TOKEN = "X-Warp10-Token";
     private static final HttpClient DEFAULT_HTTP_CLIENT = HttpClient.newHttpClient();
@@ -74,34 +78,45 @@ public class Warp10 {
         return this;
     }
 
-    public Warp10 ingressGZip(List<String> data) throws IOException {
+    public Warp10 ingressGZip(List<String> data) {
+        String batchData = String.join(System.getProperty("line.separator"), data);
+
+        return this.ingressCompressed(() -> this.stringToGzipCompressor(batchData), "application/gzip");
+    }
+
+    public Warp10 ingressCompressed(Supplier<byte[]> compressingSupplier, String contentType) {
 
         if (writeToken == null) {
             throw new MissingMandatoryDataException("WRITE_TOKEN");
         }
 
-        String batchData = String.join(System.getProperty("line.separator"), data);
-
         request = HttpRequest.newBuilder()
                 .version(HttpClient.Version.HTTP_1_1)
                 .uri(URI.create(endPointUri + "/update"))
-                .header("Content-Type", "application/gzip")
+                .header("Content-Type", contentType)
                 .header(X_WARP_10_TOKEN, writeToken)
-                .POST(HttpRequest.BodyPublishers.ofByteArray(compressData(batchData)))
+                .POST(HttpRequest.BodyPublishers.ofByteArray(compressingSupplier.get()))
                 .build();
 
         return this;
     }
 
-    private byte[] compressData(String data) throws IOException {
-        ByteArrayOutputStream bos = new ByteArrayOutputStream(data.length());
-        GZIPOutputStream gzip = new GZIPOutputStream(bos);
-        gzip.write(data.getBytes());
-        gzip.close();
-        byte[] compressed = bos.toByteArray();
-        bos.close();
+    private byte[] stringToGzipCompressor(String data){
+        try {
+            ByteArrayOutputStream bos = new ByteArrayOutputStream(data.length());
+            GZIPOutputStream gzip = new GZIPOutputStream(bos);
+            gzip.write(data.getBytes());
+            gzip.close();
+            byte[] compressed = bos.toByteArray();
+            bos.close();
 
-        return compressed;
+            return compressed;
+
+        } catch (IOException e) {
+            logger.log(Level.SEVERE, "Error while GZipping data", e);
+        }
+
+        return new byte[0];
     }
 
     public Warp10 fetch(String query) {
