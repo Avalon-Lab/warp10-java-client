@@ -1,6 +1,7 @@
 open module avalon.lab.warp10client {
 
     requires java.base;
+    requires java.logging;
     requires java.net.http;
     requires javax.inject;
 

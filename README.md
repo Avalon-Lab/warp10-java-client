@@ -37,9 +37,9 @@ Then  you can add the dependency :
 <dependency>
   <groupId>fr.avalonlab.warp10</groupId>
   <artifactId>warp10-java-client</artifactId>
-  <version>1.2</version>
+  <version>1.3</version>
   <!-- or, for Snapshot: -->
-  <version>1.3-SNAPSHOT</version>
+  <version>1.4-SNAPSHOT</version>
 </dependency>
 ``` 
 
