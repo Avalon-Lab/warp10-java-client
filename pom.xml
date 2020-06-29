@@ -5,7 +5,7 @@
 
     <artifactId>warp10-java-client</artifactId>
     <groupId>fr.avalonlab.warp10</groupId>
-    <version>1.4</version>
+    <version>1.5-SNAPSHOT</version>
 
     <name>warp10-java-client</name>
     <description>Warp10 java client and DSL.</description>
@@ -22,7 +22,7 @@
         <connection>scm:git:https://${env.CI_USER}:${env.CI_TOKEN}@github.com/Avalon-Lab/warp10-java-client.git</connection>
         <developerConnection>scm:git:https://${env.CI_USER}:${env.CI_TOKEN}@github.com/Avalon-Lab/warp10-java-client.git</developerConnection>
         <url>https://github.com/Avalon-Lab/warp10-java-client/</url>
-      <tag>warp10-java-client-1.4</tag>
+      <tag>HEAD</tag>
   </scm>
          
     <repositories>
